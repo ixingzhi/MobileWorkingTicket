@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">移动工票</string>
+
+    <string name="main_tab_name_home">首页</string>
+    <string name="main_tab_name_workbench">工作台</string>
+    <string name="main_tab_name_message">消息</string>
+    <string name="main_tab_name_mine">我的</string>
+</resources>

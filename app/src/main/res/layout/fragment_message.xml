@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_18"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_system_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_12">
+
+                <ImageView
+                    android:id="@+id/iv_system_message"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_system_message" />
+
+                <TextView
+                    android:id="@+id/tv_system_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_12"
+                    android:layout_toEndOf="@+id/iv_system_message"
+                    android:text="系统消息"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_system_message_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/tv_system_message"
+                    android:layout_below="@+id/tv_system_message"
+                    android:layout_marginRight="@dimen/space_12"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:layout_toStartOf="@+id/tv_system_message_unread_count"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="暂无系统消息"
+                    android:textColor="@color/textColor2"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tv_system_message_unread_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_unread_message"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/space_12"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="@dimen/space_12"
+                android:background="@color/gray" />
+
+            <RelativeLayout
+                android:id="@+id/rl_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_12">
+
+                <ImageView
+                    android:id="@+id/iv_notification"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_announcements" />
+
+                <TextView
+                    android:id="@+id/tv_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_12"
+                    android:layout_toEndOf="@+id/iv_notification"
+                    android:text="通知公告"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_notification_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/tv_notification"
+                    android:layout_below="@+id/tv_notification"
+                    android:layout_marginRight="@dimen/space_12"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:layout_toStartOf="@+id/tv_notification_unread_count"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="暂无通知公告消息"
+                    android:textColor="@color/textColor2"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tv_notification_unread_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_unread_message"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/space_12"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="@dimen/space_12"
+                android:background="@color/gray"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_work_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/space_12"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_work_task"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_work_task" />
+
+                <TextView
+                    android:id="@+id/tv_work_task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_12"
+                    android:layout_toEndOf="@+id/iv_work_task"
+                    android:text="工作任务"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_work_task_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/tv_work_task"
+                    android:layout_below="@+id/tv_work_task"
+                    android:layout_marginRight="@dimen/space_12"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:layout_toStartOf="@+id/tv_work_task_unread_count"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="暂无工作任务消息"
+                    android:textColor="@color/textColor2"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tv_work_task_unread_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_unread_message"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/space_12"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/windowBackground" />
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>

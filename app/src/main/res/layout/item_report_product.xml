@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_16">
+
+        <View
+            android:id="@+id/view_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/tv_work_order_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/view_horizontal"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="工作令号："
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_product_drawing_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/view_horizontal"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="产品图号："
+            android:textColor="@color/black" />
+
+        <com.shichuang.mobileworkingticket.widget.HorizontalTextProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:layout_below="@+id/tv_work_order_no"
+            android:layout_marginTop="@dimen/space_16"
+            android:max="100"
+            android:progress="60"
+            android:progressDrawable="@drawable/report_progress" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/space_12"
+        android:background="@color/gray" />
+
+</LinearLayout>

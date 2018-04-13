@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#006DE6</color>
+    <color name="colorPrimaryDark">#006DE6</color>
+    <color name="colorAccent">#006DE6</color>
+    <color name="user_info_message_notice">#E35B5A</color>
+
+    <!--线条分割线-->
+    <color name="lineColor">#E0E0E0</color>
+    <!--背景颜色-->
+    <color name="windowBackground">#f2f2f2</color>
+
+    <!--字体颜色-->
+    <color name="textColor">#565656</color>
+    <color name="textColor1">#666666</color>
+    <color name="textColor2">#A5A3A5</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#CCCCCC</color>
+    <color name="red">#FF0000</color>
+    <color name="transparent">#00000000</color>
+    <color name="click">#33ffffff</color>
+
+</resources>

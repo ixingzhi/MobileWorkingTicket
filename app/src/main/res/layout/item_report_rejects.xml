@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_16">
+
+        <View
+            android:id="@+id/view_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/tv_scrap_reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/view_horizontal"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="报废原因  ："
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_scrap_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/view_horizontal"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="数量："
+            android:textColor="@color/textColor2" />
+
+        <com.shichuang.mobileworkingticket.widget.HorizontalTextProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:layout_below="@+id/tv_scrap_reason"
+            android:layout_marginTop="@dimen/space_16"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/report_progress" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/space_12"
+        android:background="@color/gray" />
+
+</LinearLayout>

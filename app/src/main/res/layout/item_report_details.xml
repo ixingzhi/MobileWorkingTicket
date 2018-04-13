@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_12">
+
+
+    <TextView
+        android:id="@+id/tv_work_ticket_num"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="18321315"
+        android:paddingLeft="@dimen/space_4"
+        android:paddingRight="@dimen/space_4"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tv_parts_drawing_no"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/space_4"
+        android:paddingRight="@dimen/space_4"
+        android:text="UG416.14-09"
+        android:textColor="@color/black" />
+
+    <com.shichuang.mobileworkingticket.widget.HorizontalTextProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        android:layout_below="@+id/tv_work_order_no"
+        android:layout_weight="1"
+        android:max="100"
+        android:progress="60"
+        android:paddingLeft="@dimen/space_4"
+        android:paddingRight="@dimen/space_4"
+        android:progressDrawable="@drawable/report_progress" />
+
+</LinearLayout>
