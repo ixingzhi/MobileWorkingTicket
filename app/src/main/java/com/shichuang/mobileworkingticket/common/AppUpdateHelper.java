@@ -32,7 +32,6 @@ public class AppUpdateHelper {
     private static final String FILE_NAME = "mobileworkingticket";
     private static AppUpdateHelper mInstance;
     private Context mContext;
-    private AlertDialog mDialog;
     private ProgressDialog mProgressDialog;
     private String[] needPermissions = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -127,28 +126,24 @@ public class AppUpdateHelper {
 //            }
 //        });
 //        mDialog.show();
-        if (mDialog == null) {
-            mDialog = new AlertDialog.Builder(mContext)
-                    //.setView(R.layout.dialog_app_update)
-                    .setTitle("检测到新版本，需更新")
-                    .setMessage(description)
-                    //.setNegativeButton("取消", null)
-                    .setPositiveButton("更新", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            // 检查是否开启写入权限
-                            if (ContextCompat.checkSelfPermission(mContext, needPermissions[0]) != PackageManager.PERMISSION_GRANTED || ActivityCompat.shouldShowRequestPermissionRationale(
-                                    (Activity) mContext, needPermissions[0])) {
-                                ActivityCompat.requestPermissions((Activity) mContext, needPermissions, PERMISSON_REQUESTCODE);
-                            } else {
-                                startService();
-                            }
+        AlertDialog mDialog = new AlertDialog.Builder(mContext)
+                //.setView(R.layout.dialog_app_update)
+                .setTitle("检测到新版本，需更新")
+                .setMessage(description)
+                //.setNegativeButton("取消", null)
+                .setPositiveButton("更新", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // 检查是否开启写入权限
+                        if (ContextCompat.checkSelfPermission(mContext, needPermissions[0]) != PackageManager.PERMISSION_GRANTED || ActivityCompat.shouldShowRequestPermissionRationale(
+                                (Activity) mContext, needPermissions[0])) {
+                            ActivityCompat.requestPermissions((Activity) mContext, needPermissions, PERMISSON_REQUESTCODE);
+                        } else {
+                            startService();
                         }
-                    }).create();
-        }
-        if (mDialog != null && !mDialog.isShowing()) {
-            mDialog.show();
-        }
+                    }
+                }).create();
+        mDialog.show();
     }
 
     /**

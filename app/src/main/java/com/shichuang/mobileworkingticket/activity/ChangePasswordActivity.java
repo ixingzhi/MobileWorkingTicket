@@ -9,7 +9,9 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.shichuang.mobileworkingticket.R;
+import com.shichuang.mobileworkingticket.common.Constants;
 import com.shichuang.mobileworkingticket.common.NewsCallback;
+import com.shichuang.mobileworkingticket.common.TokenCache;
 import com.shichuang.mobileworkingticket.entify.AMBaseDto;
 import com.shichuang.mobileworkingticket.entify.Version;
 import com.shichuang.open.base.BaseActivity;
@@ -65,16 +67,17 @@ public class ChangePasswordActivity extends BaseActivity {
         } else if (!newPassword.equals(againNewPassword)) {
             showToast("两次新密码输入不一致");
         } else {
-            changePassword(newPassword, againNewPassword);
+            changePassword(oldPassword, newPassword);
         }
     }
 
-    private void changePassword(String newPassword, String againNewPassword) {
-        OkGo.<AMBaseDto<Version>>post("")
+    private void changePassword(String oldPassword, String newPassword) {
+        OkGo.<AMBaseDto<Version>>get(Constants.editPasswordUrl)
                 //.cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)  //缓存模式先使用缓存,然后使用网络数据
                 .tag(mContext)
-                .params("", newPassword)
-                .params("", againNewPassword)
+                .params("token", TokenCache.getToken(mContext))
+                .params("oldPassword", oldPassword)
+                .params("newPassword", newPassword)
                 .execute(new NewsCallback<AMBaseDto<Version>>() {
                     @Override
                     public void onStart(Request<AMBaseDto<Version>, ? extends Request> request) {

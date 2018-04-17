@@ -50,5 +50,5 @@ dependencies {
     // EventBus
     compile 'org.greenrobot:eventbus:3.0.0'
     compile "com.android.support:cardview-v7:$rootProject.ext.supportVersion"
-
+    implementation files('libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar')
 }

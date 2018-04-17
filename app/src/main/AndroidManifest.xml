@@ -127,6 +127,10 @@
             android:label="报表详情"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:label="修改密码"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.shichuang.open.base.WebPageActivity"
             android:label="WebPage"
             android:screenOrientation="portrait" />

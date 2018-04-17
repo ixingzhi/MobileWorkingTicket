@@ -6,12 +6,12 @@ package com.shichuang.mobileworkingticket.common;
 
 public interface Constants {
     //String MAIN_ENGINE = "http://192.168.2.250:8080/ydgp";
-    String MAIN_ENGINE = "http://192.168.2.109:8080/ydgp";
-    //String MAIN_ENGINE = "http://192.168.223.212:8080/ydgp";
+    //String MAIN_ENGINE = "http://192.168.2.109:8080/ydgp";
+    String MAIN_ENGINE = "http://192.168.223.212:8081/ydgp";
 
     //String MAIN_ENGINE_PIC = "http://192.168.2.250:8080";
-    String MAIN_ENGINE_PIC = "http://192.168.2.109:8080";
-    //String MAIN_ENGINE_PIC = "http://192.168.223.212:8080";
+    //String MAIN_ENGINE_PIC = "http://192.168.2.109:8080";
+    String MAIN_ENGINE_PIC = "http://192.168.223.212:8081";
     // 上传文件
     String uploadFile = MAIN_ENGINE + "/upload/uploadFile";
     String appUpdateUrl = MAIN_ENGINE + "/get_appversion";
@@ -43,4 +43,5 @@ public interface Constants {
     String getWorkshopInfoListUrl = MAIN_ENGINE + "/api/base/getWorkshopInfoList";
     String getSparePartsByPartsUrl = MAIN_ENGINE + "/report/getSparePartsByParts";
     String getServicePhoneUrl = MAIN_ENGINE + "/api/base/getForgetPasswordContacts";
+    String editPasswordUrl = MAIN_ENGINE + "/api/base//user/editpassword";
 }

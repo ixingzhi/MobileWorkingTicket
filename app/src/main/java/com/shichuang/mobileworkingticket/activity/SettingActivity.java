@@ -63,7 +63,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 AppUpdateHelper.getInstance().update(mContext);
                 break;
             case R.id.rl_change_password:
-
+                RxActivityTool.skipActivity(mContext, ChangePasswordActivity.class);
                 break;
             case R.id.rl_about_us:
                 WebPageActivity.newInstance(mContext, "关于我们", "");
