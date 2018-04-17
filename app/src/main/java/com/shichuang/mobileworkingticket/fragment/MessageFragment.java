@@ -13,8 +13,6 @@ import com.shichuang.mobileworkingticket.entify.MessageCount;
 import com.shichuang.mobileworkingticket.event.MessageCountEvent;
 import com.shichuang.open.base.BaseFragment;
 import com.shichuang.open.tool.RxActivityTool;
-import com.shichuang.open.tool.RxAppTool;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

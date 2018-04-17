@@ -6,13 +6,15 @@ package com.shichuang.mobileworkingticket.common;
 
 public interface Constants {
     //String MAIN_ENGINE = "http://192.168.2.250:8080/ydgp";
-    //String MAIN_ENGINE = "http://192.168.2.154:8080/ydgp";
     String MAIN_ENGINE = "http://192.168.2.109:8080/ydgp";
+    //String MAIN_ENGINE = "http://192.168.223.212:8080/ydgp";
 
     //String MAIN_ENGINE_PIC = "http://192.168.2.250:8080";
     String MAIN_ENGINE_PIC = "http://192.168.2.109:8080";
+    //String MAIN_ENGINE_PIC = "http://192.168.223.212:8080";
     // 上传文件
     String uploadFile = MAIN_ENGINE + "/upload/uploadFile";
+    String appUpdateUrl = MAIN_ENGINE + "/get_appversion";
     String loginUrl = MAIN_ENGINE + "/user/login_sub";
     String bannerUrl = MAIN_ENGINE + "/api/base/getAdvPics";
     String messageCountUrl = MAIN_ENGINE + "/message/getMessageCount";

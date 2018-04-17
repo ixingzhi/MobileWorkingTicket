@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 
+import com.shichuang.mobileworkingticket.common.AppUpdateHelper;
 import com.shichuang.mobileworkingticket.common.MessageCountHelper;
 import com.shichuang.mobileworkingticket.common.TokenCache;
 import com.shichuang.mobileworkingticket.entify.MessageCount;
@@ -45,12 +46,11 @@ public class MainActivity extends BaseActivity implements NavFragment.OnTabSelec
 
     @Override
     public void initEvent() {
-
     }
 
     @Override
     public void initData() {
-
+        AppUpdateHelper.getInstance().update(mContext);
     }
 
     @Override

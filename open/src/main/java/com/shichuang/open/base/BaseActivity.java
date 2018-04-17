@@ -46,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
      * Toast
      * @param msg
      */
-    protected void showToast(final String msg) {
+    public void showToast(final String msg) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -59,9 +59,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     /**
      * 加载框，适用于接口提交
      */
-    protected RxLoadDialog mLoadDialog;
+    public RxLoadDialog mLoadDialog;
 
-    protected void showLoading() {
+    public void showLoading() {
         if (!isFinishing()) {
             dismissLoading();
             mLoadDialog = new RxLoadDialog(mContext);
@@ -69,7 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         }
     }
 
-    protected void dismissLoading() {
+    public void dismissLoading() {
         try {
             if (!isFinishing()
                     && mLoadDialog != null

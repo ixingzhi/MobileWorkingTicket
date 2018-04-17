@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.shichuang.mobileworkingticket.R;
+import com.shichuang.mobileworkingticket.common.AppUpdateHelper;
 import com.shichuang.mobileworkingticket.common.JpushUtils;
 import com.shichuang.mobileworkingticket.common.TokenCache;
 import com.shichuang.mobileworkingticket.common.UserCache;
@@ -21,7 +22,7 @@ import com.shichuang.open.tool.RxFileTool;
 import java.io.File;
 
 /**
- * Created by Administrator on 2018/3/15.
+ * Created by xiedd on 2018/3/15.
  */
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
@@ -35,13 +36,14 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void initView(Bundle savedInstanceState, View view) {
         tvCacheSize = (TextView) findViewById(R.id.tv_cache_size);
-        ((TextView) findViewById(R.id.tv_version_number)).setText(getVersionNumber());
+        ((TextView) findViewById(R.id.tv_version_number)).setText("v" + getVersionNumber());
     }
 
     @Override
     public void initEvent() {
         findViewById(R.id.rl_wipe_cache).setOnClickListener(this);
         findViewById(R.id.rl_version_number).setOnClickListener(this);
+        findViewById(R.id.rl_change_password).setOnClickListener(this);
         findViewById(R.id.rl_about_us).setOnClickListener(this);
         findViewById(R.id.btn_logout).setOnClickListener(this);
     }
@@ -58,10 +60,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 showWipeCacheDialog();
                 break;
             case R.id.rl_version_number:
-                //AppUpdateUtils.getInstance().update(mContext);
+                AppUpdateHelper.getInstance().update(mContext);
+                break;
+            case R.id.rl_change_password:
+
                 break;
             case R.id.rl_about_us:
-                WebPageActivity.newInstance(mContext, "", "");
+                WebPageActivity.newInstance(mContext, "关于我们", "");
                 break;
             case R.id.btn_logout:
                 logout();

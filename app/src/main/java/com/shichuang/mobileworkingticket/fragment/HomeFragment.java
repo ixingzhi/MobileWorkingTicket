@@ -73,7 +73,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void OnBannerClick(int position) {
                 if (mBannerModel != null) {
-                    WebPageActivity.newInstance(getActivity(), "", mBannerModel.get(position).getLikUrl());
+                    WebPageActivity.newInstance(getActivity(), mBannerModel.get(position).getAdvTitle(), mBannerModel.get(position).getLikUrl());
                 }
             }
         });
@@ -89,13 +89,13 @@ public class HomeFragment extends BaseFragment {
         });
 
         // 领料审核
-        skipWorkingTickerActivity(R.id.ll_picking_the_audit,WorkingTicketListActivity.class, WorkingTicketListActivity.PACKING_CONFIRMATION);
+        skipWorkingTickerActivity(R.id.ll_picking_the_audit, WorkingTicketListActivity.class, WorkingTicketListActivity.PACKING_CONFIRMATION);
         // 派工调配
-        skipWorkingTickerActivity(R.id.ll_dispatching_deployment,  WorkingTicketListActivity.class, WorkingTicketListActivity.ASSIGN_TEAM_MEMBERS);
+        skipWorkingTickerActivity(R.id.ll_dispatching_deployment, WorkingTicketListActivity.class, WorkingTicketListActivity.ASSIGN_TEAM_MEMBERS);
         // 生产作业
-        skipWorkingTickerActivity(R.id.ll_production_operation,  WorkingTicketListActivity.class, WorkingTicketListActivity.PRODUCTION_OPERATION);
+        skipWorkingTickerActivity(R.id.ll_production_operation, WorkingTicketListActivity.class, WorkingTicketListActivity.PRODUCTION_OPERATION);
         // 质量检查
-        skipWorkingTickerActivity(R.id.ll_quality_inspection,  WorkingTicketListActivity.class, WorkingTicketListActivity.QUALITY_INSPECTION);
+        skipWorkingTickerActivity(R.id.ll_quality_inspection, WorkingTicketListActivity.class, WorkingTicketListActivity.QUALITY_INSPECTION);
         // 今日工票
         mContentView.findViewById(R.id.rl_today_work_ticket).setOnClickListener(new View.OnClickListener() {
             @Override

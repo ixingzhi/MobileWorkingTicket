@@ -154,14 +154,14 @@
                 android:layout_height="0.5dp"
                 android:layout_marginLeft="@dimen/space_12"
                 android:background="@color/gray"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <RelativeLayout
                 android:id="@+id/rl_work_task"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/space_12"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/iv_work_task"

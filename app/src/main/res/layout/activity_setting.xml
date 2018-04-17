@@ -34,8 +34,8 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="清除缓存" />
+            android:text="清除缓存"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tv_cache_size"
@@ -60,8 +60,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textColor="@color/black"
-            android:text="版本" />
+            android:text="版本"
+            android:textColor="@color/black" />
 
         <ImageView
             android:id="@+id/iv_version_number"
@@ -70,17 +70,43 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
-            android:visibility="gone"
-            android:src="@drawable/ic_arrows_right_gray" />
+            android:src="@drawable/ic_arrows_right_gray"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_version_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:text="1.00" />
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_change_password"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/space_4"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="修改密码"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_arrows_right_gray" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -97,8 +123,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textColor="@color/black"
-            android:text="关于我们" />
+            android:text="关于我们"
+            android:textColor="@color/black" />
 
         <ImageView
             android:layout_width="12dp"
@@ -112,13 +138,13 @@
 
     <Button
         android:id="@+id/btn_logout"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_marginTop="@dimen/space_35"
         android:background="@color/white"
         android:text="注销"
-        android:layout_marginTop="@dimen/space_35"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size_14"
-        style="?android:attr/borderlessButtonStyle"/>
+        android:textSize="@dimen/text_size_14" />
 
 </LinearLayout>

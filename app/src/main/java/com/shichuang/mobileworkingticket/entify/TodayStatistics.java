@@ -18,13 +18,13 @@ public class TodayStatistics {
     }
 
     public static class TodayStatisticsModel{
-        private int count;
+        private String count;
 
-        public int getCount() {
+        public String getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(String count) {
             this.count = count;
         }
     }

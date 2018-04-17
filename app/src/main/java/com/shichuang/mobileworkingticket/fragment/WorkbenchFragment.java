@@ -181,15 +181,15 @@ public class WorkbenchFragment extends BaseFragment {
                             List<TodayStatistics.TodayStatisticsModel> list = response.body().data.getStatistics();
                             for (int i = 0; i < list.size(); i++) {
                                 if (i == 0) {
-                                    int progress = list.get(i).getCount();
+                                    int progress = Integer.valueOf(list.get(i).getCount());
                                     mWaterWave.setMax(progress * 5);
                                     mWaterWave.setProgressSync(progress);
                                 } else if (i == 1) {
-                                    mTvUnfinishedCount.setText(String.valueOf(list.get(i).getCount()));
+                                    mTvUnfinishedCount.setText(list.get(i).getCount());
                                 } else if (i == 2) {
-                                    mTvScrapCount.setText(String.valueOf(list.get(i).getCount()));
+                                    mTvScrapCount.setText(list.get(i).getCount());
                                 } else if (i == 3) {
-                                    mTvWorkingHoursToday.setText(String.valueOf(list.get(i).getCount()));
+                                    mTvWorkingHoursToday.setText(list.get(i).getCount());
                                 }
                             }
                         }

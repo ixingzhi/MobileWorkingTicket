@@ -44,7 +44,7 @@ public class DepartmentDepItemViewBinder extends ItemViewBinder<DepartmentList.D
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (item.getHasChild() != 0 && item.getUserCount() != 0) {  // >0就是有 =0没有
+                if (item.getUserCount() != 0) {  // >0就是有 =0没有         item.getHasChild() != 0 && item.getUserCount() != 0
                     Bundle bundle = new Bundle();
                     bundle.putString("title", item.getName());
                     bundle.putInt("parentId", item.getId());
