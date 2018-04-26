@@ -132,6 +132,7 @@ public class MessageListActivity extends BaseActivity {
                                 mEmptyLayout.hide();
                                 if (mAdapter.getData().size() < table.getRecordCount()) {
                                     pageIndex++;
+                                    mAdapter.loadMoreComplete();
                                     mAdapter.setEnableLoadMore(true);
                                 } else {
                                     if (table.getRecordCount() < pageSize) {

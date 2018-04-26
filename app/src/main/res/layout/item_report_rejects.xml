@@ -8,7 +8,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/space_16">
+        android:paddingLeft="@dimen/space_16"
+        android:paddingRight="@dimen/space_16"
+        android:paddingTop="@dimen/space_24"
+        android:paddingBottom="@dimen/space_24">
 
         <View
             android:id="@+id/view_horizontal"
@@ -44,7 +47,8 @@
             android:layout_marginTop="@dimen/space_16"
             android:max="100"
             android:progress="0"
-            android:progressDrawable="@drawable/report_progress" />
+            android:progressDrawable="@drawable/report_progress"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

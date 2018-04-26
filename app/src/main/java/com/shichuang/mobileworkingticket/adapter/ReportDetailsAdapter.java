@@ -22,7 +22,7 @@ public class ReportDetailsAdapter extends BaseQuickAdapter<SparePartsByParts.Dat
         helper.setText(R.id.tv_parts_drawing_no, item.getPartsDrawingNo());
         HorizontalTextProgressBar mProgressBar = helper.getView(R.id.progress_bar);
         // 比例
-        int progress = (int) ((float) item.getFinishCount() * 100 / item.getAllCount());
+        int progress = (int) (item.getFinishCount() * 100 / item.getAllCount());
         mProgressBar.setMax(100);
         mProgressBar.setProgress(progress);
         mProgressBar.setTextProcess(progress);

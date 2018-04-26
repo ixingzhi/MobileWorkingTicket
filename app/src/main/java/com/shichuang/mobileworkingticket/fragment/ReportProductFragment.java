@@ -96,6 +96,9 @@ public class ReportProductFragment extends BaseFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString("productDrawingNo", mAdapter.getData().get(position).getProductDrawingNo());
+                bundle.putString("workOrderNo", mAdapter.getData().get(position).getWorkOrderNo());
+                bundle.putString("startDate", mActivity.startDate);
+                bundle.putString("endDate", mActivity.endDate);
                 RxActivityTool.skipActivity(mContext, StatisticsListActivity.class, bundle);
             }
         });
@@ -141,6 +144,7 @@ public class ReportProductFragment extends BaseFragment {
                                 mEmptyLayout.hide();
                                 if (mAdapter.getData().size() < table.getRecordCount()) {
                                     pageIndex++;
+                                    mAdapter.loadMoreComplete();
                                     mAdapter.setEnableLoadMore(true);
                                 } else {
                                     if (table.getRecordCount() < pageSize) {

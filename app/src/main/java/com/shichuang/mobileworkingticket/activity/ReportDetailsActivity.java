@@ -4,9 +4,14 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -39,7 +44,8 @@ import java.util.List;
  */
 
 public class ReportDetailsActivity extends BaseActivity {
-    private SelectionConditionsTabLayout mSelectionConditionsTabLayout;
+    //private SelectionConditionsTabLayout mSelectionConditionsTabLayout;
+    private EditText mEtSearchPartDrawingNo;
     private TextView mTvDate;
     private View headerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -59,6 +65,7 @@ public class ReportDetailsActivity extends BaseActivity {
 
     public String startDate;
     public String endDate;
+    private String partsDrawingNo = "";
 
     private String workOrderNo;
     private String componentNo;
@@ -74,7 +81,10 @@ public class ReportDetailsActivity extends BaseActivity {
         workOrderNo = getIntent().getStringExtra("workOrderNo");
         componentNo = getIntent().getStringExtra("componentNo");
         productDrawingNo = getIntent().getStringExtra("productDrawingNo");
+        startDate = getIntent().getStringExtra("startDate");
+        endDate = getIntent().getStringExtra("endDate");
 
+        mEtSearchPartDrawingNo = view.findViewById(R.id.et_search_part_drawing_no);
         mTvDate = (TextView) findViewById(R.id.tv_date);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
@@ -101,9 +111,13 @@ public class ReportDetailsActivity extends BaseActivity {
                 }
             }
         });
-
-        initTodayDate();
-        initWorkshopTab();
+        // 优先使用上个页面的时间
+        if (!TextUtils.isEmpty(startDate)) {
+            mTvDate.setText(startDate + "~" + endDate);
+        } else {
+            initTodayDate();
+        }
+        //initWorkshopTab();
 
         mTvWorkOrderNo.setText("工作令号：" + workOrderNo);
         mTvProductDrawingNo.setText("产品图号：" + componentNo);
@@ -133,13 +147,13 @@ public class ReportDetailsActivity extends BaseActivity {
         mTvDate.setText(startDate + "~" + endDate);
     }
 
-    private void initWorkshopTab() {
-        mSelectionConditionsTabLayout = (SelectionConditionsTabLayout) findViewById(R.id.selection_conditions_tab_layout);
-        mSelectionConditionsTabLayout.setWidth((int) (RxScreenTool.getDisplayMetrics(mContext).widthPixels * ((float) 0.7 / 1.7)));
-        final List<SelectionConditionsTabLayout.Tab> mTabsList = new ArrayList<>();
-        mTabsList.add(mSelectionConditionsTabLayout.newTab().setText("阶段"));
-        mSelectionConditionsTabLayout.addTabs(mTabsList);
-    }
+//    private void initWorkshopTab() {
+//        mSelectionConditionsTabLayout = (SelectionConditionsTabLayout) findViewById(R.id.selection_conditions_tab_layout);
+//        mSelectionConditionsTabLayout.setWidth((int) (RxScreenTool.getDisplayMetrics(mContext).widthPixels * ((float) 0.7 / 1.7)));
+//        final List<SelectionConditionsTabLayout.Tab> mTabsList = new ArrayList<>();
+//        mTabsList.add(mSelectionConditionsTabLayout.newTab().setText("阶段"));
+//        mSelectionConditionsTabLayout.addTabs(mTabsList);
+//    }
 
     @Override
     public void initEvent() {
@@ -171,6 +185,22 @@ public class ReportDetailsActivity extends BaseActivity {
                 loadMore();
             }
         }, mRecyclerView);
+
+        mEtSearchPartDrawingNo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String content = mEtSearchPartDrawingNo.getText().toString().trim();
+                    if (!TextUtils.isEmpty(content)) {
+                        partsDrawingNo = content;
+                        refresh();
+                    } else {
+                        showToast("请输入零件图号");
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -185,6 +215,7 @@ public class ReportDetailsActivity extends BaseActivity {
     }
 
     private void loadMore() {
+        Log.d("test", "加载更多");
         getMessageListData();
     }
 
@@ -192,12 +223,15 @@ public class ReportDetailsActivity extends BaseActivity {
         OkGo.<AMBaseDto<SparePartsByParts>>get(Constants.getSparePartsByPartsUrl)
                 .tag(mContext)
                 .params("token", TokenCache.getToken(mContext))
-                .params("parts_no", productDrawingNo)
+                .params("component", componentNo)
+                .params("product_drawing_no", productDrawingNo)
                 .params("start_time", startDate)
                 .params("end_time", endDate)
                 .params("workshop_info_id", "")
                 .params("pageSize", pageSize)
                 .params("pageIndex", pageIndex)
+                .params("parts_drawing_no", partsDrawingNo)
+                .params("work_order_no", workOrderNo)
                 .execute(new NewsCallback<AMBaseDto<SparePartsByParts>>() {
                     @Override
                     public void onStart(Request<AMBaseDto<SparePartsByParts>, ? extends Request> request) {
@@ -221,13 +255,15 @@ public class ReportDetailsActivity extends BaseActivity {
                                 mEmptyLayout.hide();
                                 if (mAdapter.getData().size() < table.getRecordCount()) {
                                     pageIndex++;
+                                    mAdapter.loadMoreComplete();
                                     mAdapter.setEnableLoadMore(true);
                                 } else {
                                     if (table.getRecordCount() < pageSize) {
                                         mAdapter.loadMoreEnd(true);
-                                        //showToast("没有更多数据");
+                                        //Log.d("test", "有更多数据");
                                     } else {
                                         mAdapter.loadMoreEnd(false);
+                                        //Log.d("test", "没有更多数据");
                                         //mAdapter.setEnableLoadMore(false);
                                     }
                                 }

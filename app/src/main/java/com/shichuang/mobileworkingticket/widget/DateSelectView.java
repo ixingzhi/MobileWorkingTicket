@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shichuang.mobileworkingticket.R;
+import com.shichuang.open.tool.RxAppTool;
 import com.shichuang.open.tool.RxToastTool;
 
 import org.w3c.dom.Text;
@@ -168,7 +170,7 @@ public class DateSelectView extends PopupWindow {
         DatePickerDialog mDialog = new DatePickerDialog(mContext, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String dateStr = processingDate(year, month, day);
+                String dateStr = processingDate(year, month, dayOfMonth);
                 if (type == 0) {
                     mTvStartDate.setText(dateStr);
                 } else {

@@ -110,7 +110,15 @@ public class HomeFragment extends BaseFragment {
         // 智能报表
         skipActivity(R.id.rl_intelligence_report, ReportListActivity.class);
         // 工票追溯查询
-        skipActivity(R.id.rl_work_ticket_tracing_query, WorkingTicketListActivity.class);
+        mContentView.findViewById(R.id.rl_work_ticket_tracing_query).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("type", 1);   // 区分列表和追溯
+//                RxActivityTool.skipActivity(mContext, WorkingTicketListActivity.class, bundle);
+                RxActivityTool.skipActivity(mContext, WorkingTicketSearchActivity.class);
+            }
+        });
     }
 
     @Override

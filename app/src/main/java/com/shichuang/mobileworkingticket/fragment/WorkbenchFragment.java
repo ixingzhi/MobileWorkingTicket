@@ -227,6 +227,7 @@ public class WorkbenchFragment extends BaseFragment {
                 .params("pageSize", pageSize)
                 .params("pageIndex", pageIndex)
                 .params("completion_state", completionState)   // 完成情况 1=处理中 2=未处理 3=已完成
+                .params("type", 4)  // 1=工票追溯 2=按工序工序分析 3=不良品 ，4=今日工票/工作台
                 .execute(new NewsCallback<AMBaseDto<WorkingTicketList>>() {
                     @Override
                     public void onStart(Request<AMBaseDto<WorkingTicketList>, ? extends Request> request) {
@@ -243,6 +244,7 @@ public class WorkbenchFragment extends BaseFragment {
                                 //mEmptyLayout.hide();
                                 if (mAdapter.getData().size() < table.getRecordCount()) {
                                     pageIndex++;
+                                    mAdapter.loadMoreComplete();
                                     mAdapter.setEnableLoadMore(true);
                                 } else {
                                     if (table.getRecordCount() < pageSize) {

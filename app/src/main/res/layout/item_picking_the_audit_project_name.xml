@@ -36,8 +36,8 @@
             android:layout_alignLeft="@+id/tv_user_name"
             android:layout_marginBottom="@dimen/space_4"
             android:text="部门"
-            android:textSize="@dimen/text_size_13"
-            android:textColor="@color/textColor1" />
+            android:textColor="@color/textColor1"
+            android:textSize="@dimen/text_size_13" />
 
         <TextView
             android:id="@+id/tv_work_type"
@@ -50,6 +50,17 @@
             android:textColor="@color/red"
             android:textSize="@dimen/text_size_12" />
 
+
+        <TextView
+            android:id="@+id/tv_process_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_department_name"
+            android:layout_marginLeft="@dimen/space_12"
+            android:layout_toEndOf="@+id/tv_department_name"
+            android:text="工序："
+            android:textColor="@color/textColor1" />
+
         <ImageView
             android:id="@+id/iv_make_phone_call"
             android:layout_width="40dp"
@@ -57,15 +68,15 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="@dimen/space_4"
-            android:src="@drawable/ic_make_phone_call"/>
+            android:src="@drawable/ic_make_phone_call" />
 
 
     </RelativeLayout>
-    
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
         android:layout_marginLeft="80dp"
-        android:background="@color/gray"/>
+        android:background="@color/gray" />
 
 </LinearLayout>

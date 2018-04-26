@@ -66,7 +66,6 @@ public class ReportListActivity extends BaseActivity implements View.OnClickList
         mTabLayout.addTab(mTabLayout.newTab().setText("产品"));
         mTabLayout.addTab(mTabLayout.newTab().setText("工序"));
         mTabLayout.addTab(mTabLayout.newTab().setText("不良品"));
-
     }
 
     private void initTodayDate() {
@@ -86,9 +85,8 @@ public class ReportListActivity extends BaseActivity implements View.OnClickList
         } else {
             dayStr = day + "";
         }
-        String dateStr = year + "-" + monthStr + "-" + dayStr;
-        startDate = dateStr;
-        endDate = dateStr;
+        startDate = year + "-" + monthStr + "-" + "01";
+        endDate = year + "-" + monthStr + "-" + dayStr;
         mTvDate.setText(startDate + "~" + endDate);
     }
 
@@ -108,7 +106,6 @@ public class ReportListActivity extends BaseActivity implements View.OnClickList
         mFragmentList.add(mReportProductFragment);
         mFragmentList.add(mReportProcessFragment);
         mFragmentList.add(mReportRejectsFragment);
-
 
         mViewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragmentList));
         mViewPager.setOffscreenPageLimit(2);

@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -36,7 +40,8 @@ import java.util.List;
  */
 
 public class StatisticsListActivity extends BaseActivity {
-    private SelectionConditionsTabLayout mSelectionConditionsTabLayout;
+    //private SelectionConditionsTabLayout mSelectionConditionsTabLayout;
+    private EditText mEtSearchPartNo;
     private TextView mTvDate;
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -46,9 +51,11 @@ public class StatisticsListActivity extends BaseActivity {
     private int pageSize = 10;
     private int pageIndex = 1;
     private String productDrawingNo;
+    private String workOrderNo;
 
     public String startDate;
     public String endDate;
+    private String component = "";
 
 
     @Override
@@ -59,6 +66,10 @@ public class StatisticsListActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState, View view) {
         productDrawingNo = getIntent().getStringExtra("productDrawingNo");
+        workOrderNo = getIntent().getStringExtra("workOrderNo");
+        startDate = getIntent().getStringExtra("startDate");
+        endDate = getIntent().getStringExtra("endDate");
+        mEtSearchPartNo = view.findViewById(R.id.et_search_part_no);
         mTvDate = (TextView) findViewById(R.id.tv_date);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
@@ -76,9 +87,13 @@ public class StatisticsListActivity extends BaseActivity {
                 }
             }
         });
-
-        initTodayDate();
-        initWorkshopTab();
+        // 优先使用上个页面的时间
+        if (!TextUtils.isEmpty(startDate)) {
+            mTvDate.setText(startDate + "~" + endDate);
+        } else {
+            initTodayDate();
+        }
+        //initWorkshopTab();
     }
 
     private void initTodayDate() {
@@ -104,13 +119,13 @@ public class StatisticsListActivity extends BaseActivity {
         mTvDate.setText(startDate + "~" + endDate);
     }
 
-    private void initWorkshopTab() {
-        mSelectionConditionsTabLayout = (SelectionConditionsTabLayout) findViewById(R.id.selection_conditions_tab_layout);
-        mSelectionConditionsTabLayout.setWidth((int) (RxScreenTool.getDisplayMetrics(mContext).widthPixels * ((float) 0.7 / 1.7)));
-        final List<SelectionConditionsTabLayout.Tab> mTabsList = new ArrayList<>();
-        mTabsList.add(mSelectionConditionsTabLayout.newTab().setText("阶段"));
-        mSelectionConditionsTabLayout.addTabs(mTabsList);
-    }
+//    private void initWorkshopTab() {
+//        mSelectionConditionsTabLayout = (SelectionConditionsTabLayout) findViewById(R.id.selection_conditions_tab_layout);
+//        mSelectionConditionsTabLayout.setWidth((int) (RxScreenTool.getDisplayMetrics(mContext).widthPixels * ((float) 0.7 / 1.7)));
+//        final List<SelectionConditionsTabLayout.Tab> mTabsList = new ArrayList<>();
+//        mTabsList.add(mSelectionConditionsTabLayout.newTab().setText("阶段"));
+//        mSelectionConditionsTabLayout.addTabs(mTabsList);
+//    }
 
 
     @Override
@@ -134,16 +149,18 @@ public class StatisticsListActivity extends BaseActivity {
                 bundle.putString("workOrderNo", mAdapter.getData().get(position).getWorkOrderNo());
                 bundle.putString("componentNo", mAdapter.getData().get(position).getComponent());
                 bundle.putString("productDrawingNo", mAdapter.getData().get(position).getProductDrawingNo());
+                bundle.putString("component", component);
+                bundle.putString("startDate", startDate);
+                bundle.putString("endDate", endDate);
                 RxActivityTool.skipActivity(mContext, ReportDetailsActivity.class, bundle);
             }
         });
-
-        mSelectionConditionsTabLayout.addOnTabItemSelectedListener(new SelectionConditionsTabLayout.OnTabItemSelectedListener() {
-            @Override
-            public void onTabItemSelected(int tabType, int id) {
-
-            }
-        });
+//        mSelectionConditionsTabLayout.addOnTabItemSelectedListener(new SelectionConditionsTabLayout.OnTabItemSelectedListener() {
+//            @Override
+//            public void onTabItemSelected(int tabType, int id) {
+//
+//            }
+//        });
         findViewById(R.id.ll_date_select).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,12 +177,27 @@ public class StatisticsListActivity extends BaseActivity {
                 pop.show(findViewById(R.id.ll_date_select));
             }
         });
+        mEtSearchPartNo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String content = mEtSearchPartNo.getText().toString().trim();
+                    if (!TextUtils.isEmpty(content)) {
+                        component = content;
+                        refresh();
+                    } else {
+                        showToast("请输入部件号");
+                    }
+                }
+                return false;
+            }
+        });
 
     }
 
     @Override
     public void initData() {
-        getProcessListData();
+        //getProcessListData();
         refresh();
     }
 
@@ -190,9 +222,9 @@ public class StatisticsListActivity extends BaseActivity {
                             for (ProcessList.ProcessInfoRows model : mProcessInfoList) {
                                 mProcessList.add(new SelectionConditionsTabLayout.Tab.TabList(model.getId(), model.getProcessName()));
                             }
-                            if (mSelectionConditionsTabLayout != null && mSelectionConditionsTabLayout.getTabView(0) != null && mSelectionConditionsTabLayout.getTabView(0).getTab() != null) {
-                                mSelectionConditionsTabLayout.getTabView(0).getTab().setTabList(mProcessList);
-                            }
+//                            if (mSelectionConditionsTabLayout != null && mSelectionConditionsTabLayout.getTabView(0) != null && mSelectionConditionsTabLayout.getTabView(0).getTab() != null) {
+//                                mSelectionConditionsTabLayout.getTabView(0).getTab().setTabList(mProcessList);
+//                            }
                         }
                     }
 
@@ -229,6 +261,8 @@ public class StatisticsListActivity extends BaseActivity {
                 .params("workshop_info_id", "")
                 .params("pageSize", pageSize)
                 .params("pageIndex", pageIndex)
+                .params("component", component)
+                .params("work_order_no", workOrderNo)
                 .execute(new NewsCallback<AMBaseDto<PartsByProductList>>() {
                     @Override
                     public void onStart(Request<AMBaseDto<PartsByProductList>, ? extends Request> request) {
@@ -245,6 +279,7 @@ public class StatisticsListActivity extends BaseActivity {
                                 mEmptyLayout.hide();
                                 if (mAdapter.getData().size() < table.getRecordCount()) {
                                     pageIndex++;
+                                    mAdapter.loadMoreComplete();
                                     mAdapter.setEnableLoadMore(true);
                                 } else {
                                     if (table.getRecordCount() < pageSize) {

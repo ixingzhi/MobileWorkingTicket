@@ -23,6 +23,7 @@ public class PickingTheAuditProjectTeamAdapter extends BaseQuickAdapter<WorkingT
         RxGlideTool.loadImageView(mContext, Constants.MAIN_ENGINE_PIC + item.getHeadPortrait(), (ImageView) helper.getView(R.id.iv_avatar), R.drawable.ic_avatar_default);
         helper.setText(R.id.tv_user_name, item.getNickName());
         helper.setText(R.id.tv_department_name, item.getDeptName());
+        helper.setText(R.id.tv_process_name, "工序：" + item.getProcessName());
         helper.addOnClickListener(R.id.iv_make_phone_call);
 
         String workType = "";

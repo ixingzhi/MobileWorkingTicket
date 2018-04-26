@@ -35,6 +35,7 @@ import java.util.List;
 
 public class WorkingTicketSearchActivity extends BaseActivity {
     private TextView mTvEmptyResult;
+    private EditText mEtSearchWorkOrderNo;
     private EditText mEtSearchContent;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -42,6 +43,7 @@ public class WorkingTicketSearchActivity extends BaseActivity {
 
     private int pageSize = 10;
     private int pageIndex = 1;
+    private String searchWorkOrderNoContent = "";
     private String searchContent = "";
 
     @Override
@@ -51,6 +53,7 @@ public class WorkingTicketSearchActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState, View view) {
+        mEtSearchWorkOrderNo = view.findViewById(R.id.et_search_work_order_no);
         mEtSearchContent = view.findViewById(R.id.et_search_content);
         mTvEmptyResult = view.findViewById(R.id.tv_empty_result);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
@@ -83,6 +86,32 @@ public class WorkingTicketSearchActivity extends BaseActivity {
                 loadMore();
             }
         }, mRecyclerView);
+        // 工作令号搜索
+        mEtSearchWorkOrderNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String context = s.toString().trim();
+                if (!TextUtils.isEmpty(context)) {
+                    searchWorkOrderNoContent = context;
+                    refresh();
+                } else {
+                    searchWorkOrderNoContent = "";
+                    refresh();
+//                    searchWorkOrderNoContent = "";
+//                    mTvEmptyResult.setVisibility(View.VISIBLE);
+//                    mAdapter.setNewData(null);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        // 内容搜索
         mEtSearchContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -96,8 +125,10 @@ public class WorkingTicketSearchActivity extends BaseActivity {
                     refresh();
                 } else {
                     searchContent = "";
-                    mTvEmptyResult.setVisibility(View.VISIBLE);
-                    mAdapter.setNewData(null);
+                    refresh();
+//                    searchContent = "";
+//                    mTvEmptyResult.setVisibility(View.VISIBLE);
+//                    mAdapter.setNewData(null);
                 }
             }
 
@@ -105,24 +136,23 @@ public class WorkingTicketSearchActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-
-        mEtSearchContent.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {   // 按下完成按钮，这里和上面imeOptions对应
-                    String context = v.getText().toString().trim();
-                    if (!TextUtils.isEmpty(context)) {
-                        searchContent = context;
-                        refresh();
-                    }else {
-                        searchContent = "";
-                        mTvEmptyResult.setVisibility(View.VISIBLE);
-                        mAdapter.setNewData(null);
-                    }
-                }
-                return false;  //返回true，保留软键盘。false，隐藏软键盘
-            }
-        });
+//        mEtSearchContent.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {   // 按下完成按钮，这里和上面imeOptions对应
+//                    String context = v.getText().toString().trim();
+//                    if (!TextUtils.isEmpty(context)) {
+//                        searchContent = context;
+//                        refresh();
+//                    }else {
+//                        searchContent = "";
+//                        mTvEmptyResult.setVisibility(View.VISIBLE);
+//                        mAdapter.setNewData(null);
+//                    }
+//                }
+//                return false;  //返回true，保留软键盘。false，隐藏软键盘
+//            }
+//        });
     }
 
     @Override
@@ -144,6 +174,7 @@ public class WorkingTicketSearchActivity extends BaseActivity {
         OkGo.<AMBaseDto<WorkingTicketList>>get(Constants.ticketListUrl)
                 .tag(mContext)
                 .params("token", TokenCache.getToken(mContext))
+                .params("work_order_no", searchWorkOrderNoContent)
                 .params("queryStr", searchContent)
                 .params("pageSize", pageSize)
                 .params("pageIndex", pageIndex)
@@ -163,6 +194,7 @@ public class WorkingTicketSearchActivity extends BaseActivity {
                                 //mEmptyLayout.hide();
                                 if (mAdapter.getData().size() < table.getRecordCount()) {
                                     pageIndex++;
+                                    mAdapter.loadMoreComplete();
                                     mAdapter.setEnableLoadMore(true);
                                 } else {
                                     if (table.getRecordCount() < pageSize) {

@@ -60,10 +60,16 @@ public class ChangePasswordActivity extends BaseActivity {
 
         if (TextUtils.isEmpty(oldPassword)) {
             showToast("请输入旧密码");
+        } else if (oldPassword.length() < 6) {
+            showToast("旧密码长度不能小于为6位");
         } else if (TextUtils.isEmpty(newPassword)) {
             showToast("请输入新密码");
+        } else if (newPassword.length() < 6) {
+            showToast("新密码长度不能小于为6位");
         } else if (TextUtils.isEmpty(againNewPassword)) {
             showToast("请再次输入新密码");
+        } else if (againNewPassword.length() < 6) {
+            showToast("新密码长度不能小于为6位");
         } else if (!newPassword.equals(againNewPassword)) {
             showToast("两次新密码输入不一致");
         } else {

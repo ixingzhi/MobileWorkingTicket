@@ -102,6 +102,8 @@ public class WorkingTicketDetails {
         private String deptName;
         @SerializedName("user_type_of_work")
         private int userTypeOfWork;  // 计划员=1，调度员=2，发料员=3，工序组长=4，检验员=5，工序组员=6，发运员=7
+        @SerializedName("process_name")
+        private String processName;
 
         public int getId() {
             return id;
@@ -157,6 +159,14 @@ public class WorkingTicketDetails {
 
         public void setUserTypeOfWork(int userTypeOfWork) {
             this.userTypeOfWork = userTypeOfWork;
+        }
+
+        public String getProcessName() {
+            return processName;
+        }
+
+        public void setProcessName(String processName) {
+            this.processName = processName;
         }
     }
 

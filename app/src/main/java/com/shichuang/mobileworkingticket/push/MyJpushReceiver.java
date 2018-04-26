@@ -16,6 +16,8 @@ import cn.jpush.android.api.JPushInterface;
 
 public class MyJpushReceiver extends BroadcastReceiver {
     private static final String TAG = "MyJpushReceiver";
+    // 是否进入工作任务
+    public static final int IS_ENTER_WORK_TASK = 0x11;
     private NotificationManager nm;
 
     @Override
@@ -33,7 +35,7 @@ public class MyJpushReceiver extends BroadcastReceiver {
 
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             // Toast.makeText(context, "接收到推送下来的通知", Toast.LENGTH_SHORT).show();
-            receivingNotification(context,bundle);
+            receivingNotification(context, bundle);
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             // Toast.makeText(context, "用户点击打开了通知", Toast.LENGTH_SHORT).show();
@@ -44,7 +46,7 @@ public class MyJpushReceiver extends BroadcastReceiver {
 
     }
 
-    private void receivingNotification(Context context, Bundle bundle){
+    private void receivingNotification(Context context, Bundle bundle) {
         String title = bundle.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE);
         String message = bundle.getString(JPushInterface.EXTRA_ALERT);
         String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
@@ -54,8 +56,10 @@ public class MyJpushReceiver extends BroadcastReceiver {
 //        Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage("com.shichuang.mobileworkingticket");
 //        launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 //        context.startActivity(launchIntent);
+        // 先进入如首页，再进工作任务
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("isEnterWorkTask", IS_ENTER_WORK_TASK);
         context.startActivity(intent);
     }
 

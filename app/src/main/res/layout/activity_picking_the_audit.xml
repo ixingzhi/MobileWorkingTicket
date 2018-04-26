@@ -426,6 +426,7 @@
                                 android:gravity="right|center_vertical"
                                 android:hint="请输入合格数量"
                                 android:maxLines="1"
+                                android:paddingRight="@dimen/space_16"
                                 android:textColor="@color/black"
                                 android:textColorHint="@color/textColor2"
                                 android:textSize="@dimen/text_size_14" />
@@ -496,6 +497,7 @@
                                 android:hint="请输入报废数量"
                                 android:inputType="number"
                                 android:maxLines="1"
+                                android:paddingRight="@dimen/space_16"
                                 android:textColor="@color/black"
                                 android:textColorHint="@color/textColor2"
                                 android:textSize="@dimen/text_size_14" />

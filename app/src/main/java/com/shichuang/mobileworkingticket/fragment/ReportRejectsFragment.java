@@ -99,6 +99,7 @@ public class ReportRejectsFragment extends BaseFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("causeAnalysisId", mAdapter.getData().get(position).getId());
+                bundle.putInt("type", 3);  // 标识类型为 不良品
                 RxActivityTool.skipActivity(mContext, WorkingTicketListActivity.class, bundle);
             }
         });
@@ -144,6 +145,7 @@ public class ReportRejectsFragment extends BaseFragment {
                                 mEmptyLayout.hide();
                                 if (mAdapter.getData().size() < table.getRecordCount()) {
                                     pageIndex++;
+                                    mAdapter.loadMoreComplete();
                                     mAdapter.setEnableLoadMore(true);
                                 } else {
                                     if (table.getRecordCount() < pageSize) {

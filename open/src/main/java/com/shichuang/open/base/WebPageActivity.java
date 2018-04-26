@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ public class WebPageActivity extends BaseActivity {
     private Toolbar mToolbar;
     private X5ProgressBarWebView mWebView;
     private String mUrl;
-
+    private String mTitle;
 
     @Override
     public int getLayoutId() {
@@ -34,6 +35,7 @@ public class WebPageActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState, View view) {
+        mTitle = getIntent().getStringExtra("title");
         mUrl = getIntent().getStringExtra("url");
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -45,12 +47,15 @@ public class WebPageActivity extends BaseActivity {
 
             @Override
             public void setTitle(String title) {
-                if (mToolbar != null) {
+                if (mToolbar != null && TextUtils.isEmpty(mTitle)) {
                     mToolbar.setTitle(title);
                 }
             }
         });
         mWebView.loadUrl(mUrl);
+        if(!TextUtils.isEmpty(mTitle)){
+            mToolbar.setTitle(mTitle);
+        }
     }
 
     @Override

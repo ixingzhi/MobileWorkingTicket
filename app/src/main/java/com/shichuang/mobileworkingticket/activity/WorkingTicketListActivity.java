@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,6 +16,7 @@ import com.shichuang.mobileworkingticket.adapter.WorkingTicketListAdapter;
 import com.shichuang.mobileworkingticket.common.Constants;
 import com.shichuang.mobileworkingticket.common.NewsCallback;
 import com.shichuang.mobileworkingticket.common.TokenCache;
+import com.shichuang.mobileworkingticket.common.UserCache;
 import com.shichuang.mobileworkingticket.entify.AMBaseDto;
 import com.shichuang.mobileworkingticket.entify.ProcessList;
 import com.shichuang.mobileworkingticket.entify.WorkingTicketList;
@@ -46,6 +48,7 @@ public class WorkingTicketListActivity extends BaseActivity {
     public static final int ASSIGN_TEAM_MEMBERS = 3;  // 分配组员"
     public static final int PRODUCTION_OPERATION = 4; // 生产作业
     public static final int QUALITY_INSPECTION = 5; // 质量检查
+    public static final int COMPLETED = 6; // 已完成（管理员拥有此权限）
 
 
     private SelectionConditionsTabLayout mSelectionConditionsTabLayout;
@@ -61,6 +64,11 @@ public class WorkingTicketListActivity extends BaseActivity {
     private int priorityId = -1;  //优先级 1=高 2=中 3=低
     private int processId = -1;
     private int causeAnalysisId = -1;
+    private int type = -1;
+    // 工序名称（报表-工序）
+    private String processName;
+    private String startDate = "";
+    private String endDate = "";
 
     @Override
     public int getLayoutId() {
@@ -72,6 +80,10 @@ public class WorkingTicketListActivity extends BaseActivity {
         workTicketStateId = getIntent().getIntExtra("workTicketStateId", 0);
         processId = getIntent().getIntExtra("processId", -1);
         causeAnalysisId = getIntent().getIntExtra("causeAnalysisId", -1);
+        type = getIntent().getIntExtra("type", -1);
+        processName = getIntent().getStringExtra("processName");
+        startDate = getIntent().getStringExtra("startDate");
+        endDate = getIntent().getStringExtra("endDate");
         intTab();
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
@@ -101,13 +113,17 @@ public class WorkingTicketListActivity extends BaseActivity {
         mPriorityList.add(new SelectionConditionsTabLayout.Tab.TabList(2, "普通"));
         mTabsList.add(mSelectionConditionsTabLayout.newTab().setText("优先级").setTabType(TAB_PRIORITY).setTabList(mPriorityList));
 
-        mTabsList.add(mSelectionConditionsTabLayout.newTab().setText("阶段").setTabType(TAB_PROCESS));
+        mTabsList.add(mSelectionConditionsTabLayout.newTab().setText(TextUtils.isEmpty(processName) ? "阶段" : processName).setTabType(TAB_PROCESS));
 
         List<SelectionConditionsTabLayout.Tab.TabList> mStatusList = new ArrayList<>();  // 2=领料确认 3=分配组员，4=生产作业,5=质量检查
         mStatusList.add(new SelectionConditionsTabLayout.Tab.TabList(PACKING_CONFIRMATION, "领料确认", workTicketStateId == PACKING_CONFIRMATION));
         mStatusList.add(new SelectionConditionsTabLayout.Tab.TabList(ASSIGN_TEAM_MEMBERS, "分配组员", workTicketStateId == ASSIGN_TEAM_MEMBERS));
         mStatusList.add(new SelectionConditionsTabLayout.Tab.TabList(PRODUCTION_OPERATION, "生产作业", workTicketStateId == PRODUCTION_OPERATION));
         mStatusList.add(new SelectionConditionsTabLayout.Tab.TabList(QUALITY_INSPECTION, "质量检查", workTicketStateId == QUALITY_INSPECTION));
+        // 如果是管理员，添加“已完成”
+        if (TokenCache.getTypeWork(mContext) == 8) {
+            mStatusList.add(new SelectionConditionsTabLayout.Tab.TabList(COMPLETED, "已完成", workTicketStateId == COMPLETED));
+        }
         mTabsList.add(mSelectionConditionsTabLayout.newTab().setText("状态").setTabType(TAB_STATUS).setTabList(mStatusList));
         mSelectionConditionsTabLayout.addTabs(mTabsList);
     }
@@ -182,7 +198,12 @@ public class WorkingTicketListActivity extends BaseActivity {
                             List<ProcessList.ProcessInfoRows> mProcessInfoList = response.body().data.getProcessInfoRows();
                             List<SelectionConditionsTabLayout.Tab.TabList> mProcessList = new ArrayList<>();
                             for (ProcessList.ProcessInfoRows model : mProcessInfoList) {
-                                mProcessList.add(new SelectionConditionsTabLayout.Tab.TabList(model.getId(), model.getProcessName()));
+                                // 从报表-工序 页面带过来的工序名，进行匹配
+                                if (processName != null && model.getProcessName().equals(processName)) {
+                                    mProcessList.add(new SelectionConditionsTabLayout.Tab.TabList(model.getId(), model.getProcessName(), true));
+                                } else {
+                                    mProcessList.add(new SelectionConditionsTabLayout.Tab.TabList(model.getId(), model.getProcessName()));
+                                }
                             }
                             if (mSelectionConditionsTabLayout != null && mSelectionConditionsTabLayout.getTabView(1) != null && mSelectionConditionsTabLayout.getTabView(1).getTab() != null) {
                                 mSelectionConditionsTabLayout.getTabView(1).getTab().setTabList(mProcessList);
@@ -220,8 +241,11 @@ public class WorkingTicketListActivity extends BaseActivity {
                 .params("priority", priorityId)
                 .params("process_id", processId)
                 .params("cause_analysis_id", causeAnalysisId)
+                .params("type", type)
                 .params("pageSize", pageSize)
                 .params("pageIndex", pageIndex)
+                .params("start_time", startDate)
+                .params("end_time", endDate)
                 .execute(new NewsCallback<AMBaseDto<WorkingTicketList>>() {
                     @Override
                     public void onStart(Request<AMBaseDto<WorkingTicketList>, ? extends Request> request) {
@@ -238,6 +262,7 @@ public class WorkingTicketListActivity extends BaseActivity {
                                 mEmptyLayout.hide();
                                 if (mAdapter.getData().size() < table.getRecordCount()) {
                                     pageIndex++;
+                                    mAdapter.loadMoreComplete();
                                     mAdapter.setEnableLoadMore(true);
                                 } else {
                                     if (table.getRecordCount() < pageSize) {
@@ -281,7 +306,7 @@ public class WorkingTicketListActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        if(event != null && event.message.equals("refreshWorkingTicketList")){
+        if (event != null && event.message.equals("refreshWorkingTicketList")) {
             refresh();
         }
     }

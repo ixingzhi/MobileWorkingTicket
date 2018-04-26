@@ -35,9 +35,9 @@ public class PartsByProductList {
         private String productDrawingNo;
         private String component;
         @SerializedName("finish_count")
-        private int finishCount;
+        private double finishCount;
         @SerializedName("all_count")
-        private int allCount;
+        private double allCount;
 
         public String getWorkOrderNo() {
             return workOrderNo;
@@ -63,19 +63,19 @@ public class PartsByProductList {
             this.component = component;
         }
 
-        public int getFinishCount() {
+        public double getFinishCount() {
             return finishCount;
         }
 
-        public void setFinishCount(int finishCount) {
+        public void setFinishCount(double finishCount) {
             this.finishCount = finishCount;
         }
 
-        public int getAllCount() {
+        public double getAllCount() {
             return allCount;
         }
 
-        public void setAllCount(int allCount) {
+        public void setAllCount(double allCount) {
             this.allCount = allCount;
         }
     }

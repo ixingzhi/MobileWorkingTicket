@@ -86,9 +86,9 @@ public class SparePartsByParts {
             @SerializedName("add_time")
             private String addTime;
             @SerializedName("finish_count")
-            private int finishCount;
+            private double finishCount;
             @SerializedName("all_count")
-            private int allCount;
+            private double allCount;
 
             public int getRowNumber() {
                 return rowNumber;
@@ -146,19 +146,19 @@ public class SparePartsByParts {
                 this.addTime = addTime;
             }
 
-            public int getFinishCount() {
+            public double getFinishCount() {
                 return finishCount;
             }
 
-            public void setFinishCount(int finishCount) {
+            public void setFinishCount(double finishCount) {
                 this.finishCount = finishCount;
             }
 
-            public int getAllCount() {
+            public double getAllCount() {
                 return allCount;
             }
 
-            public void setAllCount(int allCount) {
+            public void setAllCount(double allCount) {
                 this.allCount = allCount;
             }
         }

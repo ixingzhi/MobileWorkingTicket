@@ -56,4 +56,12 @@ public class TokenCache {
         return token;
     }
 
+    public static int getTypeWork(Context ctx){
+        int typeWork = 0;
+        if (token(ctx) != null) {
+            typeWork = token(ctx).getTypeWork();
+        }
+        return typeWork;
+    }
+
 }

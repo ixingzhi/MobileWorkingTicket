@@ -90,7 +90,11 @@ public class ReportProcessFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putInt("processId", mAdapter.getData().get(position).getId());
+                bundle.putInt("processId", mAdapter.getData().get(position).getProcessId());
+                bundle.putString("processName", mAdapter.getData().get(position).getProcessName());
+                bundle.putInt("type", 2);  // 标识类型为 工序
+                bundle.putString("startDate",mActivity.startDate);
+                bundle.putString("endDate",mActivity.endDate);
                 RxActivityTool.skipActivity(mContext, WorkingTicketListActivity.class, bundle);
             }
         });
@@ -142,6 +146,7 @@ public class ReportProcessFragment extends BaseFragment {
                                 mEmptyLayout.hide();
                                 if (mAdapter.getData().size() < table.getRecordCount()) {
                                     pageIndex++;
+                                    mAdapter.loadMoreComplete();
                                     mAdapter.setEnableLoadMore(true);
                                 } else {
                                     if (table.getRecordCount() < pageSize) {

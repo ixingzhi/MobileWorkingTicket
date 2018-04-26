@@ -30,6 +30,7 @@ import com.shichuang.mobileworkingticket.entify.Empty;
 import com.shichuang.mobileworkingticket.entify.UploadFile;
 import com.shichuang.mobileworkingticket.entify.User;
 import com.shichuang.open.base.BaseFragment;
+import com.shichuang.open.base.WebPageActivity;
 import com.shichuang.open.tool.RxActivityTool;
 import com.shichuang.open.tool.RxGlideTool;
 import com.shichuang.open.widget.RxEmptyLayout;
@@ -113,7 +114,8 @@ public class MineFragment extends BaseFragment {
         mContentView.findViewById(R.id.ll_help_center).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RxActivityTool.skipActivity(mContext, HelpCenterActivity.class);
+                WebPageActivity.newInstance(mContext, "帮助中心", Constants.helpCenterUrl);
+                //RxActivityTool.skipActivity(mContext, HelpCenterActivity.class);
             }
         });
     }

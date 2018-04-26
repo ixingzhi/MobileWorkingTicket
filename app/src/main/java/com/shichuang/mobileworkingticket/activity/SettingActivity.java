@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.shichuang.mobileworkingticket.R;
 import com.shichuang.mobileworkingticket.common.AppUpdateHelper;
+import com.shichuang.mobileworkingticket.common.Constants;
 import com.shichuang.mobileworkingticket.common.JpushUtils;
 import com.shichuang.mobileworkingticket.common.TokenCache;
 import com.shichuang.mobileworkingticket.common.UserCache;
@@ -66,7 +67,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 RxActivityTool.skipActivity(mContext, ChangePasswordActivity.class);
                 break;
             case R.id.rl_about_us:
-                WebPageActivity.newInstance(mContext, "关于我们", "");
+                WebPageActivity.newInstance(mContext, "关于我们", Constants.aboutUsUrl);
                 break;
             case R.id.btn_logout:
                 logout();

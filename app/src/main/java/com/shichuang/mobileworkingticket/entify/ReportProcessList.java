@@ -29,7 +29,8 @@ public class ReportProcessList {
     }
 
     public static class ReportProcessModel{
-        private int id;
+        @SerializedName("process_id")
+        private int processId;
         @SerializedName("process_name")
         private String processName;
         @SerializedName("sum_complete_count")
@@ -37,12 +38,12 @@ public class ReportProcessList {
         @SerializedName("sum_unfinished_count")
         private int sumUnfinishedCount;
 
-        public int getId() {
-            return id;
+        public int getProcessId() {
+            return processId;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setProcessId(int processId) {
+            this.processId = processId;
         }
 
         public String getProcessName() {
