@@ -33,7 +33,7 @@ public class AssignTeamMembersActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
     private AssignTeamMembersAdapter mAdapter;
 
-    private int ticketId;
+    private String ticketId;
     private int nowProcessId;
 
     @Override
@@ -43,7 +43,7 @@ public class AssignTeamMembersActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState, View view) {
-        ticketId = getIntent().getIntExtra("ticketId", 0);
+        ticketId = getIntent().getStringExtra("ticketId");
         nowProcessId = getIntent().getIntExtra("nowProcessId", 0);
         mSwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = view.findViewById(R.id.recycler_view);
@@ -98,7 +98,7 @@ public class AssignTeamMembersActivity extends BaseActivity {
         OkGo.<AMBaseDto<ChooseTeamMember>>get(Constants.chooseTeamMemberUrl)
                 .tag(mContext)
                 .params("token", TokenCache.getToken(mContext))
-                .params("ticket_id", ticketId)
+                .params("ticket_ids", ticketId)
                 .execute(new NewsCallback<AMBaseDto<ChooseTeamMember>>() {
                     @Override
                     public void onStart(Request<AMBaseDto<ChooseTeamMember>, ? extends Request> request) {
@@ -135,7 +135,7 @@ public class AssignTeamMembersActivity extends BaseActivity {
         OkGo.<AMBaseDto<Empty>>post(Constants.distributionTeamMemberUrl)
                 .tag(mContext)
                 .params("token", TokenCache.getToken(mContext))
-                .params("ticket_id", ticketId)
+                .params("ticket_ids", ticketId)
                 .params("user_ids", members)
                 .params("now_process_id", nowProcessId)
                 .execute(new NewsCallback<AMBaseDto<Empty>>() {

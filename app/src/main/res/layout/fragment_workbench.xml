@@ -32,24 +32,24 @@
                 android:id="@+id/ll_status_select"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/space_12"
-                android:paddingRight="@dimen/space_12"
                 android:layout_alignParentRight="true"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/space_12"
+                android:paddingRight="@dimen/space_12">
 
                 <TextView
                     android:id="@+id/tv_working_ticket_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="处理中"
-                    android:textSize="@dimen/text_size_16"
-                    android:textColor="@color/white" />
+                    android:text="待处理"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_status_select"/>
+                    android:src="@drawable/ic_status_select" />
 
             </LinearLayout>
         </RelativeLayout>

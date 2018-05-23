@@ -211,6 +211,21 @@ public class WorkingTicketDetails {
         private String processName;
         @SerializedName("now_process_id")
         private int nowProcessId;
+        @SerializedName("release_user_name")
+        private String releaseUsername;
+        @SerializedName("working_hours")
+        private String workingHours;  // 当前工序总工时
+        @SerializedName("preparation_hours")
+        private String preparationHours;  // 当前工序准备工时
+        @SerializedName("single_hours")
+        private String singleHours;  // 当前工序单件工时
+        private String lastProcess;  // 最后一道工序
+        @SerializedName("leader_remarks")
+        private String leaderRemarks;  // 当期工序组长备注信息
+        @SerializedName("group_remarks")
+        private String groupRemarks;  // 当前工序组员备注信息
+        @SerializedName("work_ticket_remark")
+        private String workTicketRemark;  // 施工备注信息
 
         public int getId() {
             return id;
@@ -387,9 +402,73 @@ public class WorkingTicketDetails {
         public void setNowProcessId(int nowProcessId) {
             this.nowProcessId = nowProcessId;
         }
+
+        public String getReleaseUsername() {
+            return releaseUsername;
+        }
+
+        public void setReleaseUsername(String releaseUsername) {
+            this.releaseUsername = releaseUsername;
+        }
+
+        public String getWorkingHours() {
+            return workingHours;
+        }
+
+        public void setWorkingHours(String workingHours) {
+            this.workingHours = workingHours;
+        }
+
+        public String getPreparationHours() {
+            return preparationHours;
+        }
+
+        public void setPreparationHours(String preparationHours) {
+            this.preparationHours = preparationHours;
+        }
+
+        public String getSingleHours() {
+            return singleHours;
+        }
+
+        public void setSingleHours(String singleHours) {
+            this.singleHours = singleHours;
+        }
+
+        public String getLastProcess() {
+            return lastProcess;
+        }
+
+        public void setLastProcess(String lastProcess) {
+            this.lastProcess = lastProcess;
+        }
+
+        public String getLeaderRemarks() {
+            return leaderRemarks;
+        }
+
+        public void setLeaderRemarks(String leaderRemarks) {
+            this.leaderRemarks = leaderRemarks;
+        }
+
+        public String getGroupRemarks() {
+            return groupRemarks;
+        }
+
+        public void setGroupRemarks(String groupRemarks) {
+            this.groupRemarks = groupRemarks;
+        }
+
+        public String getWorkTicketRemark() {
+            return workTicketRemark;
+        }
+
+        public void setWorkTicketRemark(String workTicketRemark) {
+            this.workTicketRemark = workTicketRemark;
+        }
     }
 
-    public static class CauseAnalysisModel{
+    public static class CauseAnalysisModel {
         private int id;
         @SerializedName("process_info_id")
         private int processInfoId;

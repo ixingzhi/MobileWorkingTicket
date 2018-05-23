@@ -14,8 +14,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 
 import com.shichuang.mobileworkingticket.MainActivity;
+import com.shichuang.mobileworkingticket.Setting;
+import com.shichuang.mobileworkingticket.common.Constants;
 import com.shichuang.mobileworkingticket.common.TokenCache;
 import com.shichuang.open.tool.RxActivityTool;
 

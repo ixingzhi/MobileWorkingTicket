@@ -34,8 +34,8 @@ ext {
     applicationId = "com.shichuang.mobileworkingticket"
     minSdkVersion = 19
     targetSdkVersion = 26
-    versionCode = 1
-    versionName = "1.0.2"
+    versionCode = 4
+    versionName = "1.0.4"
     supportVersion = '26.0.0-alpha1'
 }
 

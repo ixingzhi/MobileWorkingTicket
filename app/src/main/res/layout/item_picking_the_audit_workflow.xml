@@ -43,7 +43,7 @@
         android:layout_marginRight="@dimen/space_8"
         android:layout_weight="1"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:maxLines="2"
         android:text="***创建了工票" />
 
     <TextView

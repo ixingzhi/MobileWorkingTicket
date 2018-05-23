@@ -63,7 +63,7 @@
             android:label="工票列表"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PickingTheAuditActivity"
+            android:name=".activity.WorkingTicketDetailsActivity"
             android:label="派工调配"
             android:screenOrientation="portrait" />
         <activity

@@ -1,8 +1,12 @@
 package com.shichuang.mobileworkingticket.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +16,7 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.shichuang.mobileworkingticket.MainActivity;
 import com.shichuang.mobileworkingticket.R;
+import com.shichuang.mobileworkingticket.Setting;
 import com.shichuang.mobileworkingticket.common.Constants;
 import com.shichuang.mobileworkingticket.common.JpushUtils;
 import com.shichuang.mobileworkingticket.common.NewsCallback;
@@ -33,6 +38,7 @@ public class LoginActivity extends BaseActivity {
     private Button mBtnLogin;
 
     private boolean needFinish;
+    //private int testCount;
 
     @Override
     public int getLayoutId() {
@@ -61,19 +67,25 @@ public class LoginActivity extends BaseActivity {
                 RxActivityTool.skipActivity(mContext, ForgotPasswordActivity.class);
             }
         });
+//        findViewById(R.id.view_test_layout).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                testCount++;
+//                if (testCount > 2) {
+//                    testCount = 0;
+//                    showTestDialog();
+//                }
+//            }
+//        });
     }
 
     @Override
     public void initData() {
-
     }
 
     private void checkInfo() {
         String userName = mEtUserName.getText().toString().trim();
         String password = mEtPassword.getText().toString().trim();
-
-//        RxActivityTool.skipActivity(mContext, MainActivity.class);
-//        needFinish = true;
 
         if (TextUtils.isEmpty(userName)) {
             showToast("请输入手机号");
@@ -141,5 +153,37 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+//    private void showTestDialog() {
+//        String address = Setting.getEngineAddress(mContext);
+//        if (TextUtils.isEmpty(address)) {
+//            address = Constants.MAIN_ENGINE_PIC;
+//        }
+//        final String[] items = new String[]{"http://192.168.2.124:8080", "http://61.160.111.74:8081", "http://workticket.wxboiler.com:8081", "没有找到，点击输入"};
+//        new AlertDialog.Builder(mContext).setTitle("当前地址：" + address).setItems(items, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                if (which < 3) {
+//                    String address = items[which];
+//                    Setting.updateEngineAddress(mContext, address);
+//                } else {
+//                    showTestInputDialog();
+//                }
+//            }
+//        }).show();
+//    }
+//
+//    private void showTestInputDialog() {
+//        final EditText editText = new EditText(mContext);
+//        editText.setBackground(null);
+//        editText.setPadding(20,0,20,0);
+//        new AlertDialog.Builder(mContext).setTitle("输入地址").setView(editText)
+//                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String address = editText.getText().toString().trim();
+//                        Setting.updateEngineAddress(mContext, address);
+//                    }
+//                }).show();
+//    }
 
 }

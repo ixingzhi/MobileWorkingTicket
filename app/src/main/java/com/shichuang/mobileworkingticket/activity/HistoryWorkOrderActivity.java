@@ -120,7 +120,7 @@ public class HistoryWorkOrderActivity extends BaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("ticketId", mAdapter.getData().get(position).getId());
-                RxActivityTool.skipActivity(mContext, PickingTheAuditActivity.class, bundle);
+                RxActivityTool.skipActivity(mContext, WorkingTicketDetailsActivity.class, bundle);
             }
         });
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -161,6 +161,7 @@ public class HistoryWorkOrderActivity extends BaseActivity {
                     public void onSuccess(final Response<AMBaseDto<HistoryWorkInfo>> response) {
                         if (response.body().code == 0 && response.body().data != null && response.body().data.getRow() != null) {
                             HistoryWorkInfo.HistoryWorkInfoModel historyWorkInfo = response.body().data.getRow();
+                            mTvTotalWorkOrderCount.setText(historyWorkInfo.getSumCount());
                             mTvCompleteCount.setText(historyWorkInfo.getSumCompleteCount());
                             mTvTotalWorkingHours.setText(historyWorkInfo.getSumWorkingHours());
                         }
@@ -196,6 +197,7 @@ public class HistoryWorkOrderActivity extends BaseActivity {
                 .params("pageIndex", pageIndex)
                 .params("start_time", startTime)
                 .params("end_time", endTime)
+                .params("type", 5)
                 .execute(new NewsCallback<AMBaseDto<WorkingTicketList>>() {
                     @Override
                     public void onStart(Request<AMBaseDto<WorkingTicketList>, ? extends Request> request) {
@@ -207,7 +209,6 @@ public class HistoryWorkOrderActivity extends BaseActivity {
                         if (response.body().code == 0) {
                             WorkingTicketList table = response.body().data;
                             setData(table.getRows());
-                            mTvTotalWorkOrderCount.setText(table.getRecordCount() + "");
                             // 判断是否有更多数据
                             if (table.getRecordCount() > 0) {
                                 mEmptyLayout.hide();

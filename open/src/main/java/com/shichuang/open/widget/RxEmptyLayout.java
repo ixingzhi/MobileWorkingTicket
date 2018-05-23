@@ -60,7 +60,7 @@ public class RxEmptyLayout extends LinearLayout implements View.OnClickListener 
     public void onClick(View view) {
         if (onEmptyLayoutClickListener != null) {
             if (mStatus != NETWORK_LOADING) {
-                setVisibility(View.GONE);
+                //setVisibility(View.GONE);
                 onEmptyLayoutClickListener.onEmptyLayoutClick(mStatus);
             }
         }

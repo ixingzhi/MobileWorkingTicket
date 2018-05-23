@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class HistoryWorkInfo {
     private HistoryWorkInfoModel row;
 
+
     public HistoryWorkInfoModel getRow() {
         return row;
     }
@@ -18,6 +19,8 @@ public class HistoryWorkInfo {
     }
 
     public static class HistoryWorkInfoModel {
+        @SerializedName("sum_count")
+        private String sumCount;
         @SerializedName("sum_complete_count")
         private String sumCompleteCount;
         @SerializedName("sum_working_hours")
@@ -38,5 +41,14 @@ public class HistoryWorkInfo {
         public void setSumWorkingHours(String sumWorkingHours) {
             this.sumWorkingHours = sumWorkingHours;
         }
+
+        public String getSumCount() {
+            return sumCount;
+        }
+
+        public void setSumCount(String sumCount) {
+            this.sumCount = sumCount;
+        }
+
     }
 }

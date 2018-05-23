@@ -47,14 +47,15 @@ public class WebPageActivity extends BaseActivity {
 
             @Override
             public void setTitle(String title) {
-                if (mToolbar != null && TextUtils.isEmpty(mTitle)) {
-                    mToolbar.setTitle(title);
+                if (getSupportActionBar() != null && TextUtils.isEmpty(mTitle)) {
+                    getSupportActionBar().setTitle(mTitle);
                 }
             }
         });
         mWebView.loadUrl(mUrl);
         if(!TextUtils.isEmpty(mTitle)){
-            mToolbar.setTitle(mTitle);
+            getSupportActionBar().setTitle(mTitle);
+            //mToolbar.setTitle(mTitle);
         }
     }
 

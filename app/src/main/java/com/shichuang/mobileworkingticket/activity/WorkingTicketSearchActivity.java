@@ -7,9 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -77,7 +75,7 @@ public class WorkingTicketSearchActivity extends BaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("ticketId", mAdapter.getData().get(position).getId());
-                RxActivityTool.skipActivity(mContext, PickingTheAuditActivity.class, bundle);
+                RxActivityTool.skipActivity(mContext, WorkingTicketDetailsActivity.class, bundle);
             }
         });
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

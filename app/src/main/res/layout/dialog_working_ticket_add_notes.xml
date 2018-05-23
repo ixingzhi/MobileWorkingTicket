@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@drawable/bg_input_remarks_info"
+    android:padding="@dimen/space_12">
+
+    <EditText
+        android:id="@+id/et_remarks"
+        android:layout_width="240dp"
+        android:layout_height="160dp"
+        android:background="@drawable/bg_input_remarks_info"
+        android:hint="输入备注信息"
+        android:padding="@dimen/space_8"
+        android:gravity="top"
+        android:textSize="@dimen/text_size_15" />
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@drawable/bg_btn_assign_team_members"
+        android:layout_marginTop="@dimen/space_12"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_14"
+        android:text="完成"/>
+
+</LinearLayout>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -15,8 +17,8 @@
             android:id="@+id/title_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tb_title="工票列表"
-            app:tb_right_icon="@drawable/ic_search_white">
+            app:tb_right_icon="@drawable/ic_search_white"
+            app:tb_title="工票列表">
 
         </com.shichuang.mobileworkingticket.widget.RxTitleBar>
     </android.support.v7.widget.Toolbar>
@@ -25,16 +27,17 @@
     <com.shichuang.mobileworkingticket.widget.SelectionConditionsTabLayout
         android:id="@+id/selection_conditions_tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="48dp"/>
+        android:layout_height="48dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/gray"/>
+        android:background="@color/gray" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
@@ -55,5 +58,15 @@
             android:visibility="gone" />
 
     </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_assign_team_members_status"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/space_16"
+        android:background="@drawable/bg_btn_login"
+        android:text="分配组员"
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
 </LinearLayout>

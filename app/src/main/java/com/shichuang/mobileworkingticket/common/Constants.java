@@ -5,17 +5,16 @@ package com.shichuang.mobileworkingticket.common;
  */
 
 public interface Constants {
-    //String MAIN_ENGINE = "http://192.168.2.250:8080/ydgp";
-    String MAIN_ENGINE = "http://192.168.2.109:8080/ydgp";
+    //String MAIN_ENGINE = "http://192.168.2.124:8080/ydgp";
     //String MAIN_ENGINE = "http://192.168.223.212:8081/ydgp";
     //String MAIN_ENGINE = "http://61.160.111.74:8081/ydgp";
-    //String MAIN_ENGINE = "http://workticket.wxboiler.com:8081/ydgp";
+    String MAIN_ENGINE = "http://workticket.wxboiler.com:8081/ydgp";
 
-    //String MAIN_ENGINE_PIC = "http://192.168.2.250:8080";
-    String MAIN_ENGINE_PIC = "http://192.168.2.109:8080";
+    //String MAIN_ENGINE_PIC = "http://192.168.2.124:8080";
     //String MAIN_ENGINE_PIC = "http://192.168.223.212:8081";
     //String MAIN_ENGINE_PIC = "http://61.160.111.74:8081";
-    //String MAIN_ENGINE_PIC = "http://workticket.wxboiler.com:8081";
+    String MAIN_ENGINE_PIC = "http://workticket.wxboiler.com:8081";
+
     // 上传文件
     String uploadFile = MAIN_ENGINE + "/upload/uploadFile";
     String appUpdateUrl = MAIN_ENGINE + "/get_appversion";
@@ -48,9 +47,11 @@ public interface Constants {
     String getSparePartsByPartsUrl = MAIN_ENGINE + "/report/getSparePartsByParts";
     String getServicePhoneUrl = MAIN_ENGINE + "/api/base/getForgetPasswordContacts";
     String editPasswordUrl = MAIN_ENGINE + "/user/editpassword";
+    String createRemarksUrl = MAIN_ENGINE + "/creatRemarks";
 
     // 帮助中心
     String helpCenterUrl = MAIN_ENGINE + "/help_center?type=1";
     // 关于我们
     String aboutUsUrl = MAIN_ENGINE + "/help_center?type=2";
+
 }

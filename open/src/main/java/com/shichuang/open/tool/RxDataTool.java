@@ -23,7 +23,6 @@ import java.util.regex.Pattern;
 /**
  * Created by xiedd on 2016/1/24.
  * 数据处理相关
-
  */
 
 public class RxDataTool {
@@ -160,7 +159,7 @@ public class RxDataTool {
      * @return
      */
     public static boolean isMobileNO(String mobiles) {
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(17[^4,\\D])|(18[0-9]))\\d{8}$");
+        Pattern p = Pattern.compile("^((13[0-9])|(14[0-9])|(15[^4,\\D])|(17[^4,\\D])|(18[0-9]))\\d{8}$");
         Matcher m = p.matcher(mobiles);
         return m.matches();
     }

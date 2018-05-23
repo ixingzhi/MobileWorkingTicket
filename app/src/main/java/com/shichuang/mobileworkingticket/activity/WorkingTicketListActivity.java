@@ -1,11 +1,14 @@
 package com.shichuang.mobileworkingticket.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.lzy.okgo.OkGo;
@@ -16,11 +19,11 @@ import com.shichuang.mobileworkingticket.adapter.WorkingTicketListAdapter;
 import com.shichuang.mobileworkingticket.common.Constants;
 import com.shichuang.mobileworkingticket.common.NewsCallback;
 import com.shichuang.mobileworkingticket.common.TokenCache;
-import com.shichuang.mobileworkingticket.common.UserCache;
 import com.shichuang.mobileworkingticket.entify.AMBaseDto;
 import com.shichuang.mobileworkingticket.entify.ProcessList;
 import com.shichuang.mobileworkingticket.entify.WorkingTicketList;
 import com.shichuang.mobileworkingticket.event.MessageEvent;
+import com.shichuang.mobileworkingticket.widget.AssignTeamMembersDialog;
 import com.shichuang.mobileworkingticket.widget.RxTitleBar;
 import com.shichuang.mobileworkingticket.widget.SelectionConditionsTabLayout;
 import com.shichuang.open.base.BaseActivity;
@@ -49,12 +52,16 @@ public class WorkingTicketListActivity extends BaseActivity {
     public static final int PRODUCTION_OPERATION = 4; // 生产作业
     public static final int QUALITY_INSPECTION = 5; // 质量检查
     public static final int COMPLETED = 6; // 已完成（管理员拥有此权限）
+    // 分配组员成功
+    public static final int ASSIGN_TEAM_MEMBERS_SUCCESS = 0x14;
 
 
     private SelectionConditionsTabLayout mSelectionConditionsTabLayout;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private WorkingTicketListAdapter mAdapter;
+    // 分配组员
+    private Button mBtnAssignTeamMembers;
 
     private RxEmptyLayout mEmptyLayout;
 
@@ -65,10 +72,18 @@ public class WorkingTicketListActivity extends BaseActivity {
     private int processId = -1;
     private int causeAnalysisId = -1;
     private int type = -1;
+    // 存放工序数据
+    private List<SelectionConditionsTabLayout.Tab.TabList> mProcessList;
     // 工序名称（报表-工序）
     private String processName;
     private String startDate = "";
     private String endDate = "";
+    // 组员分配，工序筛选
+    private int nowProcessId = -1;
+    private String brandNo = "";
+    private String specifications = "";
+    // 标识是否处于正在筛选组员分配
+    private boolean isTeamMembersAssigned;
 
     @Override
     public int getLayoutId() {
@@ -91,6 +106,7 @@ public class WorkingTicketListActivity extends BaseActivity {
         mAdapter = new WorkingTicketListAdapter();
         mAdapter.setPreLoadNumber(2);
         mRecyclerView.setAdapter(mAdapter);
+        mBtnAssignTeamMembers = (Button) findViewById(R.id.btn_assign_team_members_status);
 
         mEmptyLayout = view.findViewById(R.id.empty_layout);
         mEmptyLayout.setOnEmptyLayoutClickListener(new RxEmptyLayout.OnEmptyLayoutClickListener() {
@@ -102,6 +118,7 @@ public class WorkingTicketListActivity extends BaseActivity {
             }
         });
         EventBus.getDefault().register(this);
+        isShowAssignTeamMembers();
     }
 
     private void intTab() {
@@ -145,6 +162,7 @@ public class WorkingTicketListActivity extends BaseActivity {
                     processId = id;
                 } else if (tabType == TAB_STATUS) {
                     workTicketStateId = id;
+                    isShowAssignTeamMembers();
                 }
                 refresh();
             }
@@ -162,7 +180,50 @@ public class WorkingTicketListActivity extends BaseActivity {
                 bundle.putInt("ticketId", mAdapter.getData().get(position).getId());
                 bundle.putInt("processState", mAdapter.getData().get(position).getProcessState());
                 bundle.putInt("workTicketStateId", workTicketStateId);
-                RxActivityTool.skipActivity(mContext, PickingTheAuditActivity.class, bundle);
+                RxActivityTool.skipActivity(mContext, WorkingTicketDetailsActivity.class, bundle);
+            }
+        });
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.iv_is_select) {
+                    List<WorkingTicketList.WorkingTicketListModel> mList = mAdapter.getData();
+                    WorkingTicketList.WorkingTicketListModel currentWorkingTicket = mList.get(position);
+                    WorkingTicketList.WorkingTicketListModel selectedWorkingTicket = null;
+                    // 判断选择的是不是相同的工序
+                    boolean isFirstSelect = true;
+                    for (WorkingTicketList.WorkingTicketListModel workingTicket : mList) {
+                        if (workingTicket.isSelect()) {
+                            selectedWorkingTicket = workingTicket;
+                            isFirstSelect = false;
+                        }
+                    }
+                    if (isFirstSelect) {
+                        currentWorkingTicket.setSelect(currentWorkingTicket.isSelect() ? false : true);
+                    } else {
+                        // 判断当前选择的与上次选择的是否相同(胚料牌号和规格相同即可)
+                        if (selectedWorkingTicket != null && currentWorkingTicket.getBrandNo().equals(selectedWorkingTicket.getBrandNo())
+                                && currentWorkingTicket.getSpecifications().equals(selectedWorkingTicket.getSpecifications())) {
+                            currentWorkingTicket.setSelect(currentWorkingTicket.isSelect() ? false : true);
+                        } else {
+                            showToast("请选择胚料牌号和规格相同的工票");
+                        }
+                    }
+                    mAdapter.notifyDataSetChanged();
+                    // 判断是否有选择的，有则设置分配组员按钮确认。
+                    boolean flag = false;
+                    for (WorkingTicketList.WorkingTicketListModel workingTicket : mAdapter.getData()) {
+                        if (workingTicket.isSelect()) {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        mBtnAssignTeamMembers.setText("确定");
+                    } else {
+                        mBtnAssignTeamMembers.setText("分配组员");
+                    }
+                }
             }
         });
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -171,12 +232,65 @@ public class WorkingTicketListActivity extends BaseActivity {
                 loadMore();
             }
         }, mRecyclerView);
+        // 组员分配/选择完成
+        mBtnAssignTeamMembers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = mBtnAssignTeamMembers.getText().toString();
+                if ("确定".equals(text)) {
+                    // 获得已选择的工票Id
+                    String ids = "";
+                    for (WorkingTicketList.WorkingTicketListModel workingTicket : mAdapter.getData()) {
+                        if (workingTicket.isSelect()) {
+                            ids += workingTicket.getId() + ",";
+                        }
+                    }
+                    if (ids.length() > 0) {
+                        // 截取最后一个逗号
+                        ids = ids.substring(0, ids.length() - 1);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("ticketId", ids);
+                        bundle.putInt("nowProcessId", nowProcessId);
+                        RxActivityTool.skipActivityForResult((Activity) mContext, AssignTeamMembersActivity.class, bundle, ASSIGN_TEAM_MEMBERS_SUCCESS);
+                    }
+                } else {
+                    // 显示筛选组员的条件
+                    AssignTeamMembersDialog dialog = new AssignTeamMembersDialog(mContext);
+                    dialog.setProcessList(mProcessList);
+                    dialog.setOnScreeningComplete(new AssignTeamMembersDialog.OnScreeningComplete() {
+                        @Override
+                        public void complete(String brand, String spec, int id) {
+                            brandNo = brand;
+                            specifications = spec;
+                            nowProcessId = id;
+                            // 标识为正在组员分配
+                            isTeamMembersAssigned = true;
+                            // 影藏条件选择框
+                            mSelectionConditionsTabLayout.setVisibility(View.GONE);
+                            mAdapter.setTeamMembersAssignedSelectStatus(true);
+                            refresh();
+                        }
+                    });
+                    dialog.show();
+                }
+            }
+        });
     }
 
     @Override
     public void initData() {
         getProcessListData();
         refresh();
+    }
+
+    /**
+     * 是否显示分配组长的按钮
+     */
+    private void isShowAssignTeamMembers(){
+        // 如果是分配组员，则显示分配组员按钮（只有组长有权限）
+        if (TokenCache.getTypeWork(mContext) == 4) {
+            mBtnAssignTeamMembers.setVisibility(workTicketStateId == ASSIGN_TEAM_MEMBERS ? View.VISIBLE : View.GONE);
+        }
     }
 
     /**
@@ -196,7 +310,7 @@ public class WorkingTicketListActivity extends BaseActivity {
                     public void onSuccess(final Response<AMBaseDto<ProcessList>> response) {
                         if (response.body().code == 0 && response.body().data != null && response.body().data.getProcessInfoRows() != null) {
                             List<ProcessList.ProcessInfoRows> mProcessInfoList = response.body().data.getProcessInfoRows();
-                            List<SelectionConditionsTabLayout.Tab.TabList> mProcessList = new ArrayList<>();
+                            mProcessList = new ArrayList<>();
                             for (ProcessList.ProcessInfoRows model : mProcessInfoList) {
                                 // 从报表-工序 页面带过来的工序名，进行匹配
                                 if (processName != null && model.getProcessName().equals(processName)) {
@@ -246,6 +360,9 @@ public class WorkingTicketListActivity extends BaseActivity {
                 .params("pageIndex", pageIndex)
                 .params("start_time", startDate)
                 .params("end_time", endDate)
+                .params("now_process_id", nowProcessId)  // 当前进行中的工序id
+                .params("brand_no", brandNo)  // 坯料牌号
+                .params("specifications", specifications)  // 规格
                 .execute(new NewsCallback<AMBaseDto<WorkingTicketList>>() {
                     @Override
                     public void onStart(Request<AMBaseDto<WorkingTicketList>, ? extends Request> request) {
@@ -307,6 +424,15 @@ public class WorkingTicketListActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
         if (event != null && event.message.equals("refreshWorkingTicketList")) {
+            refresh();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 分配组员成功
+        if (requestCode == ASSIGN_TEAM_MEMBERS_SUCCESS && resultCode == RESULT_OK) {
             refresh();
         }
     }

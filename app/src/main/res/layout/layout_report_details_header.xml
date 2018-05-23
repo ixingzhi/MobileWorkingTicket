@@ -6,45 +6,45 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_12"
         android:background="@color/white"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_work_order_no"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:gravity="center"
             android:maxLines="1"
-            android:paddingLeft="@dimen/space_4"
-            android:paddingRight="@dimen/space_4"
+            android:paddingTop="@dimen/space_6"
+            android:paddingBottom="@dimen/space_6"
+            android:paddingLeft="@dimen/space_12"
+            android:paddingRight="@dimen/space_12"
             android:text="工作令号：" />
 
         <TextView
             android:id="@+id/tv_product_drawing_no"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:gravity="center"
             android:maxLines="1"
-            android:paddingLeft="@dimen/space_4"
-            android:paddingRight="@dimen/space_4"
+            android:paddingTop="@dimen/space_6"
+            android:paddingBottom="@dimen/space_6"
+            android:paddingLeft="@dimen/space_12"
+            android:paddingRight="@dimen/space_12"
             android:text="产品图号：" />
 
         <TextView
             android:id="@+id/tv_component_no"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:gravity="center"
             android:maxLines="1"
-            android:paddingLeft="@dimen/space_4"
-            android:paddingRight="@dimen/space_4"
+            android:paddingTop="@dimen/space_6"
+            android:paddingBottom="@dimen/space_6"
+            android:paddingLeft="@dimen/space_12"
+            android:paddingRight="@dimen/space_12"
             android:text="部件号：" />
     </LinearLayout>
 
@@ -165,14 +165,14 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:gravity="center"
             android:text="零件图号" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:gravity="center"
             android:text="当前进度" />
     </LinearLayout>

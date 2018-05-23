@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,8 +17,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.shichuang.mobileworkingticket.R;
-import com.shichuang.mobileworkingticket.activity.HistoryWorkOrderActivity;
-import com.shichuang.mobileworkingticket.activity.PickingTheAuditActivity;
+import com.shichuang.mobileworkingticket.activity.WorkingTicketDetailsActivity;
 import com.shichuang.mobileworkingticket.adapter.WorkingTicketListAdapter;
 import com.shichuang.mobileworkingticket.common.Constants;
 import com.shichuang.mobileworkingticket.common.NewsCallback;
@@ -52,7 +50,7 @@ public class WorkbenchFragment extends BaseFragment {
 
     private int pageSize = 10;
     private int pageIndex = 1;
-    private int completionState = 1;   // 完成情况 1=处理中 2=未处理 3=已完成
+    private int completionState = 2;   // 完成情况 1=处理中 2=未处理 3=已完成
 
 
     @Override
@@ -130,7 +128,7 @@ public class WorkbenchFragment extends BaseFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("ticketId", mAdapter.getData().get(position).getId());
-                RxActivityTool.skipActivity(mContext, PickingTheAuditActivity.class, bundle);
+                RxActivityTool.skipActivity(mContext, WorkingTicketDetailsActivity.class, bundle);
             }
         });
         mLlStatusSelect.setOnClickListener(new View.OnClickListener() {
@@ -141,10 +139,10 @@ public class WorkbenchFragment extends BaseFragment {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.state_processing) {
-                            completionState = 1;
-                        } else if (item.getItemId() == R.id.state_untreated) {
+                        if (item.getItemId() == R.id.state_untreated) {
                             completionState = 2;
+                        } else if (item.getItemId() == R.id.state_processing) {
+                            completionState = 1;
                         } else if (item.getItemId() == R.id.state_Completed) {
                             completionState = 3;
                         }

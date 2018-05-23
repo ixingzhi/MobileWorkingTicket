@@ -48,6 +48,16 @@ public class WorkingTicketList {
         private String addTime;
         @SerializedName("release_user_name")
         private String releaseUserName;
+        @SerializedName("brand_no")
+        private String brandNo;   // 坯料牌号
+        private String specifications; // 规格
+        @SerializedName("overall_dimensions")
+        private String overallDimensions; // 落料尺寸
+        @SerializedName("process_name")
+        private String processName;
+        private boolean isSelect;
+        @SerializedName("process_member_state")
+        private int processMemberStatus;  // 1==待开始 2==已开始 3==已完成
 
         public int getId() {
             return id;
@@ -135,6 +145,54 @@ public class WorkingTicketList {
 
         public void setReleaseUserName(String releaseUserName) {
             this.releaseUserName = releaseUserName;
+        }
+
+        public String getBrandNo() {
+            return brandNo;
+        }
+
+        public void setBrandNo(String brandNo) {
+            this.brandNo = brandNo;
+        }
+
+        public String getSpecifications() {
+            return specifications;
+        }
+
+        public void setSpecifications(String specifications) {
+            this.specifications = specifications;
+        }
+
+        public String getOverallDimensions() {
+            return overallDimensions;
+        }
+
+        public void setOverallDimensions(String overallDimensions) {
+            this.overallDimensions = overallDimensions;
+        }
+
+        public String getProcessName() {
+            return processName;
+        }
+
+        public void setProcessName(String processName) {
+            this.processName = processName;
+        }
+
+        public boolean isSelect() {
+            return isSelect;
+        }
+
+        public void setSelect(boolean select) {
+            isSelect = select;
+        }
+
+        public int getProcessMemberStatus() {
+            return processMemberStatus;
+        }
+
+        public void setProcessMemberStatus(int processMemberStatus) {
+            this.processMemberStatus = processMemberStatus;
         }
     }
 }

@@ -120,8 +120,8 @@ public class ReportDetailsActivity extends BaseActivity {
         //initWorkshopTab();
 
         mTvWorkOrderNo.setText("工作令号：" + workOrderNo);
-        mTvProductDrawingNo.setText("产品图号：" + componentNo);
-        mTvComponentNo.setText("部件号：" + productDrawingNo);
+        mTvProductDrawingNo.setText("产品图号：" + productDrawingNo);
+        mTvComponentNo.setText("部件号：" + componentNo);
     }
 
     private void initTodayDate() {

@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -54,7 +55,6 @@ public class ForgotPasswordActivity extends BaseActivity {
 
     @Override
     public void initEvent() {
-
     }
 
     @Override

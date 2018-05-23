@@ -10,23 +10,24 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/space_12">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_part_pic"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+        <ImageView
+            android:id="@+id/iv_is_select"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:background="@color/windowBackground"
-            android:visibility="gone"/>
+            android:padding="@dimen/space_8"
+            android:src="@drawable/ic_ticket_list_switch"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_part_no"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/iv_part_pic"
-            android:text="零件号："
-            android:maxLines="1"
-            android:ellipsize="end"
+            android:layout_toEndOf="@+id/iv_is_select"
             android:layout_toStartOf="@+id/tv_part_status"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="零件号："
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_16" />
 
@@ -34,8 +35,8 @@
             android:id="@+id/tv_part_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_12"
             android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/space_12"
             android:text="状态"
             android:textColor="@color/red"
             android:textSize="@dimen/text_size_16" />
@@ -83,6 +84,50 @@
                 android:textColor="@color/textColor1"
                 android:textSize="@dimen/text_size_12" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_part_attribute_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/ll_part_attribute"
+            android:layout_below="@+id/ll_part_attribute"
+            android:layout_marginTop="@dimen/space_8"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_brand_no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="胚料牌号："
+                android:textColor="@color/textColor1"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:id="@+id/tv_overall_dimensions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="落料尺寸："
+                android:textColor="@color/textColor1"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:id="@+id/tv_specifications"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:maxLines="1"
+                android:text="规格："
+                android:textColor="@color/textColor1"
+                android:textSize="@dimen/text_size_12" />
 
         </LinearLayout>
 
@@ -91,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/tv_part_no"
-            android:layout_below="@+id/ll_part_attribute"
+            android:layout_below="@+id/ll_part_attribute_2"
             android:layout_marginRight="@dimen/space_8"
             android:layout_marginTop="@dimen/space_8"
             android:layout_toStartOf="@+id/tv_publisher"
@@ -102,15 +147,15 @@
             android:textSize="@dimen/text_size_12" />
 
         <TextView
-            android:id="@+id/tv_publisher"
+            android:id="@+id/tv_current_progress_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/ll_part_attribute"
+            android:layout_below="@+id/ll_part_attribute_2"
             android:layout_marginTop="@dimen/space_8"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="发布人：李东旭"
+            android:text="当前工序："
             android:textColor="@color/textColor2"
             android:textSize="@dimen/text_size_12" />
 
@@ -121,6 +166,6 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginLeft="12dp"
-        android:background="@color/gray"/>
+        android:background="@color/gray" />
 
 </LinearLayout>
