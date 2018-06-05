@@ -76,11 +76,13 @@ public class WorkingTicketDetailsActivity extends BaseActivity implements View.O
     private TextView mTvBrandNo;
     private TextView mTvOverallDimensions;
     private TextView mTvSpecifications;
-    private TextView mTvEachNumber;
+    //private TextView mTvEachNumber;
+    private TextView mTvCraftName;
     private TextView mTvPlanNumber;
     private TextView mTvCurrentNumber;
     private TextView mTvDistributionOfWorkshop;
-    private TextView mTvPublisher;
+    //private TextView mTvPublisher;
+    private TextView mTvSteelSeal;
     private TextView mTvTotalWorkingHours;  // 总工时
     private TextView mTvPrepareWorkingHours;  // 准备工时
     private TextView mTvSinglePieceWorkingHours;  // 单件工时
@@ -89,6 +91,10 @@ public class WorkingTicketDetailsActivity extends BaseActivity implements View.O
     private TextView mTvLeaderRemarks; // 组长备注信息
     private TextView mTvGroupRemarks; // 组员备注信息
     private TextView mTvWorkTicketRemarks; // 施工备注信息
+    // 备注1,2,3
+    private TextView mTvNote1;
+    private TextView mTvNote2;
+    private TextView mTvNote3;
     private TextView mTvPriority;
     private RxEmptyLayout mEmptyLayout;
     private Button mBtnWorkflow, mBtnProjectTeam;
@@ -145,11 +151,13 @@ public class WorkingTicketDetailsActivity extends BaseActivity implements View.O
         mTvBrandNo = view.findViewById(R.id.tv_brand_no);
         mTvOverallDimensions = view.findViewById(R.id.tv_overall_dimensions);
         mTvSpecifications = view.findViewById(R.id.tv_specifications);
-        mTvEachNumber = view.findViewById(R.id.tv_each_number);
+        //mTvEachNumber = view.findViewById(R.id.tv_each_number);
+        mTvCraftName = view.findViewById(R.id.tv_craft_name);
         mTvPlanNumber = view.findViewById(R.id.tv_plan_number);
         mTvCurrentNumber = view.findViewById(R.id.tv_current_number);
         mTvDistributionOfWorkshop = view.findViewById(R.id.tv_distribution_of_workshop);
-        mTvPublisher = view.findViewById(R.id.tv_publisher);
+        //mTvPublisher = view.findViewById(R.id.tv_publisher);
+        mTvSteelSeal = view.findViewById(R.id.tv_steel_seal);
         mTvTotalWorkingHours = view.findViewById(R.id.tv_total_working_hours);
         mTvPrepareWorkingHours = view.findViewById(R.id.tv_prepare_working_hours);
         mTvSinglePieceWorkingHours = view.findViewById(R.id.tv_single_piece_working_hours);
@@ -158,6 +166,9 @@ public class WorkingTicketDetailsActivity extends BaseActivity implements View.O
         mTvLeaderRemarks = view.findViewById(R.id.tv_leader_remarks);
         mTvGroupRemarks = view.findViewById(R.id.tv_group_remarks);
         mTvWorkTicketRemarks = view.findViewById(R.id.tv_work_ticket_remark);
+        mTvNote1 = view.findViewById(R.id.tv_note_1);
+        mTvNote2 = view.findViewById(R.id.tv_note_2);
+        mTvNote3 = view.findViewById(R.id.tv_note_3);
         mTvPriority = view.findViewById(R.id.tv_priority);
         mBtnWorkflow = view.findViewById(R.id.btn_workflow);
         mBtnProjectTeam = view.findViewById(R.id.btn_project_team);
@@ -544,22 +555,45 @@ public class WorkingTicketDetailsActivity extends BaseActivity implements View.O
         mTvBrandNo.setText("牌号：" + ticketData.getBrandNo());
         mTvOverallDimensions.setText("落料尺寸：" + ticketData.getOverallDimensions());
         mTvSpecifications.setText("规格：" + ticketData.getSpecifications());
-        mTvEachNumber.setText("每台数：" + ticketData.getEachNumber());
+        //mTvEachNumber.setText("每台数：" + ticketData.getEachNumber());
+        mTvCraftName.setText("程序：" + ticketData.getCraftName());
         mTvPlanNumber.setText("计划数：" + ticketData.getPlanNumber());
         mTvCurrentNumber.setText("当前数：" + ticketData.getCompleteCount());
         mTvDistributionOfWorkshop.setText("分配车间：" + ticketData.getWorkshopName());
-        mTvPublisher.setText("发布人：" + ticketData.getReleaseUsername());
+        //mTvPublisher.setText("发布人：" + ticketData.getReleaseUsername());
+        mTvSteelSeal.setText("钢印：" + ticketData.getSteelSeal());
         mTvTotalWorkingHours.setText("总工时：" + ticketData.getWorkingHours());
         mTvPrepareWorkingHours.setText("准备工时：" + ticketData.getPreparationHours());
         mTvSinglePieceWorkingHours.setText("单件工时：" + ticketData.getSingleHours());
         mTvLastProcessName.setText("发运工序：" + ticketData.getLastProcess());
         String leaderRemarks = ticketData.getLeaderRemarks();
-        mTvLeaderRemarks.setText(leaderRemarks.replace("&","   "));
+        mTvLeaderRemarks.setText(leaderRemarks.replace("&", "   "));
         String groupRemarks = ticketData.getGroupRemarks();
-        mTvGroupRemarks.setText(groupRemarks.replace("&","   "));
+        mTvGroupRemarks.setText(groupRemarks.replace("&", "   "));
         String workTicketRemark = ticketData.getWorkTicketRemark();
-        mTvWorkTicketRemarks.setText(workTicketRemark.replace("&","   "));
+        mTvWorkTicketRemarks.setText(workTicketRemark.replace("&", "   "));
         mTvAllocateTime.setText("分配时间：" + RxTimeTool.stringFormat(ticketData.getAddTime()));
+        // 备注1
+        if (TextUtils.isEmpty(ticketData.getRemark())) {
+            mTvNote1.setVisibility(View.GONE);
+        } else {
+            mTvNote1.setVisibility(View.VISIBLE);
+            mTvNote1.setText(ticketData.getRemark());
+        }
+        // 备注2
+        if (TextUtils.isEmpty(ticketData.getRemark1())) {
+            mTvNote2.setVisibility(View.GONE);
+        } else {
+            mTvNote2.setVisibility(View.VISIBLE);
+            mTvNote2.setText(ticketData.getRemark1());
+        }
+        // 备注3
+        if (TextUtils.isEmpty(ticketData.getRemark2())) {
+            mTvNote3.setVisibility(View.GONE);
+        } else {
+            mTvNote3.setVisibility(View.VISIBLE);
+            mTvNote3.setText(ticketData.getRemark2());
+        }
         // 优先级
         if (ticketData.getPriority() == 1) {
             mTvPriority.setText("优先级：紧急");

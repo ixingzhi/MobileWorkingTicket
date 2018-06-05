@@ -223,7 +223,6 @@
                 </LinearLayout>
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -251,6 +250,17 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="每台数："
+                        android:textColor="@color/textColor1"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_craft_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="程序："
                         android:textColor="@color/textColor1" />
 
                 </LinearLayout>
@@ -316,6 +326,17 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:text="发布人："
+                        android:textColor="@color/textColor1"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_steel_seal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="钢印："
                         android:textColor="@color/textColor1" />
 
                     <TextView
@@ -442,9 +463,9 @@
                     android:id="@+id/ll_group_remarks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_click_color"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:background="@drawable/bg_click_color"
                     android:paddingBottom="@dimen/space_8"
                     android:paddingLeft="@dimen/space_12"
                     android:paddingRight="@dimen/space_12"
@@ -477,9 +498,9 @@
                     android:id="@+id/ll_work_ticket_remark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_click_color"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:background="@drawable/bg_click_color"
                     android:paddingBottom="@dimen/space_4"
                     android:paddingLeft="@dimen/space_12"
                     android:paddingRight="@dimen/space_12"
@@ -507,6 +528,42 @@
                         android:src="@drawable/ic_arrows_right_gray" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_note_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/space_4"
+                    android:paddingLeft="@dimen/space_12"
+                    android:paddingRight="@dimen/space_12"
+                    android:paddingTop="@dimen/space_4"
+                    android:text="备注1："
+                    android:textColor="@color/textColor1" />
+
+
+                <TextView
+                    android:id="@+id/tv_note_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/space_4"
+                    android:paddingLeft="@dimen/space_12"
+                    android:paddingRight="@dimen/space_12"
+                    android:paddingTop="@dimen/space_4"
+                    android:text="备注2："
+                    android:textColor="@color/textColor1" />
+
+
+                <TextView
+                    android:id="@+id/tv_note_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/space_4"
+                    android:paddingLeft="@dimen/space_12"
+                    android:paddingRight="@dimen/space_12"
+                    android:paddingTop="@dimen/space_4"
+                    android:text="备注3："
+                    android:textColor="@color/textColor1" />
+
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -226,6 +226,13 @@ public class WorkingTicketDetails {
         private String groupRemarks;  // 当前工序组员备注信息
         @SerializedName("work_ticket_remark")
         private String workTicketRemark;  // 施工备注信息
+        private String remark;
+        private String remark1;
+        private String remark2;
+        @SerializedName("craft_name")
+        private String craftName; // 程序
+        @SerializedName("steel_seal")
+        private String steelSeal; // 钢印
 
         public int getId() {
             return id;
@@ -465,6 +472,46 @@ public class WorkingTicketDetails {
 
         public void setWorkTicketRemark(String workTicketRemark) {
             this.workTicketRemark = workTicketRemark;
+        }
+
+        public String getRemark() {
+            return remark;
+        }
+
+        public void setRemark(String remark) {
+            this.remark = remark;
+        }
+
+        public String getRemark1() {
+            return remark1;
+        }
+
+        public void setRemark1(String remark1) {
+            this.remark1 = remark1;
+        }
+
+        public String getRemark2() {
+            return remark2;
+        }
+
+        public void setRemark2(String remark2) {
+            this.remark2 = remark2;
+        }
+
+        public String getCraftName() {
+            return craftName;
+        }
+
+        public void setCraftName(String craftName) {
+            this.craftName = craftName;
+        }
+
+        public String getSteelSeal() {
+            return steelSeal;
+        }
+
+        public void setSteelSeal(String steelSeal) {
+            this.steelSeal = steelSeal;
         }
     }
 
