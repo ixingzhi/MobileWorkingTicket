@@ -44,6 +44,7 @@ import com.shichuang.mobileworkingticket.widget.RxTitleBar;
 import com.shichuang.mobileworkingticket.widget.WorkingTicketAddNotesDialog;
 import com.shichuang.open.base.BaseActivity;
 import com.shichuang.open.tool.RxActivityTool;
+import com.shichuang.open.tool.RxBigDecimalTool;
 import com.shichuang.open.tool.RxTimeTool;
 import com.shichuang.open.widget.CustomLinearLayoutManager;
 import com.shichuang.open.widget.RxEmptyLayout;
@@ -561,7 +562,11 @@ public class WorkingTicketDetailsActivity extends BaseActivity implements View.O
         mTvCurrentNumber.setText("当前数：" + ticketData.getCompleteCount());
         mTvDistributionOfWorkshop.setText("分配车间：" + ticketData.getWorkshopName());
         //mTvPublisher.setText("发布人：" + ticketData.getReleaseUsername());
-        mTvSteelSeal.setText("钢印：" + ticketData.getSteelSeal());
+        if (!TextUtils.isEmpty(ticketData.getSteelSeal())) {
+            mTvSteelSeal.setText("钢印：" + RxBigDecimalTool.toDecimal(ticketData.getSteelSeal(), 2));
+        } else {
+            mTvSteelSeal.setText("钢印：");
+        }
         mTvTotalWorkingHours.setText("总工时：" + ticketData.getWorkingHours());
         mTvPrepareWorkingHours.setText("准备工时：" + ticketData.getPreparationHours());
         mTvSinglePieceWorkingHours.setText("单件工时：" + ticketData.getSingleHours());
@@ -578,21 +583,21 @@ public class WorkingTicketDetailsActivity extends BaseActivity implements View.O
             mTvNote1.setVisibility(View.GONE);
         } else {
             mTvNote1.setVisibility(View.VISIBLE);
-            mTvNote1.setText(ticketData.getRemark());
+            mTvNote1.setText("备注1：" + ticketData.getRemark());
         }
         // 备注2
         if (TextUtils.isEmpty(ticketData.getRemark1())) {
             mTvNote2.setVisibility(View.GONE);
         } else {
             mTvNote2.setVisibility(View.VISIBLE);
-            mTvNote2.setText(ticketData.getRemark1());
+            mTvNote2.setText("备注2：" + ticketData.getRemark1());
         }
         // 备注3
         if (TextUtils.isEmpty(ticketData.getRemark2())) {
             mTvNote3.setVisibility(View.GONE);
         } else {
             mTvNote3.setVisibility(View.VISIBLE);
-            mTvNote3.setText(ticketData.getRemark2());
+            mTvNote3.setText("备注3：" + ticketData.getRemark2());
         }
         // 优先级
         if (ticketData.getPriority() == 1) {

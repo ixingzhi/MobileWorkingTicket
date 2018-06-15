@@ -39,6 +39,10 @@ public class MessageList {
         @SerializedName("is_read")
         private int isRead;
         private boolean isOpenMessageContent;
+        @SerializedName("ticket_id")
+        private int ticketId;
+        @SerializedName("process_state")
+        private int processState;
 
         public int getId() {
             return id;
@@ -86,6 +90,22 @@ public class MessageList {
 
         public void setOpenMessageContent(boolean openMessageContent) {
             isOpenMessageContent = openMessageContent;
+        }
+
+        public int getTicketId() {
+            return ticketId;
+        }
+
+        public void setTicketId(int ticketId) {
+            this.ticketId = ticketId;
+        }
+
+        public int getProcessState() {
+            return processState;
+        }
+
+        public void setProcessState(int processState) {
+            this.processState = processState;
         }
     }
 }

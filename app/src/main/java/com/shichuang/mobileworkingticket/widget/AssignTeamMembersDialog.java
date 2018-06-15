@@ -2,7 +2,6 @@ package com.shichuang.mobileworkingticket.widget;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -85,9 +84,10 @@ public class AssignTeamMembersDialog extends BaseDialog implements View.OnClickL
     private void checkInfo() {
         String brandNo = mEtBrandNo.getText().toString().trim();
         String specifications = mEtSpecifications.getText().toString().trim();
-        if (TextUtils.isEmpty(brandNo) && TextUtils.isEmpty(specifications)) {
-            RxToastTool.showShort("请输入胚料牌号或规格");
-        } else if (selectId == -1) {
+//        if (TextUtils.isEmpty(brandNo) && TextUtils.isEmpty(specifications)) {
+//            RxToastTool.showShort("请输入胚料牌号或规格");
+//        } else
+        if (selectId == -1) {
             RxToastTool.showShort("请选择当前工序");
         } else {
             if (onScreeningComplete != null) {

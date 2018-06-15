@@ -1,7 +1,9 @@
 package com.shichuang.mobileworkingticket.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.shichuang.mobileworkingticket.common.TokenCache;
 import com.shichuang.mobileworkingticket.entify.AMBaseDto;
 import com.shichuang.mobileworkingticket.entify.MessageList;
 import com.shichuang.open.base.BaseActivity;
+import com.shichuang.open.tool.RxActivityTool;
 import com.shichuang.open.widget.RxEmptyLayout;
 
 import java.util.List;
@@ -35,7 +38,7 @@ public class MessageListActivity extends BaseActivity {
     private MessageListAdapter mAdapter;
     private RxEmptyLayout mEmptyLayout;
 
-    private int messageTypeId;
+    private int messageTypeId;    // 1 系统消息，2 通知公告， 3 工作任务
     private int pageSize = 10;
     private int pageIndex = 1;
 
@@ -76,14 +79,39 @@ public class MessageListActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mAdapter.getData().get(position).getIsRead() <= 0) {
-                    readMessage(mAdapter.getData().get(position).getId(), position);
+                if (mAdapter.getItem(position).getIsRead() <= 0) {
+                    // 如果是发运员，直接进入消息
+                    if (TokenCache.getTypeWork(mContext) == 7) {
+                        skipWorkingTicketDetails(mAdapter.getItem(position));
+                    } else {
+                        readMessage(mAdapter.getItem(position), position, true);
+                    }
+                    //
                 } else {
-                    rotateAnim(mAdapter.getViewByPosition(position, R.id.iv_open_status), 180f);
-                    boolean openStatus = !mAdapter.getData().get(position).isOpenMessageContent();
-                    mAdapter.getData().get(position).setOpenMessageContent(openStatus);
-                    mAdapter.notifyItemChanged(position);
+//                    rotateAnim(mAdapter.getViewByPosition(position, R.id.iv_open_status), 180f);
+//                    boolean openStatus = !mAdapter.getData().get(position).isOpenMessageContent();
+//                    mAdapter.getData().get(position).setOpenMessageContent(openStatus);
+//                    mAdapter.notifyItemChanged(position);
+                    // 已读，直接进入消息详情
+                    skipWorkingTicketDetails(mAdapter.getItem(position));
                 }
+            }
+        });
+        mAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, final int position) {
+                if (messageTypeId == 3 && TokenCache.getTypeWork(mContext) == 7) {  // （工作任务）只针对发运员
+                    String[] items = new String[]{"已操作"};
+                    new AlertDialog.Builder(mContext).setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            readMessage(mAdapter.getItem(position), position, false);
+                        }
+                    }).show();
+                }
+
+
+                return false;
             }
         });
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
@@ -174,11 +202,11 @@ public class MessageListActivity extends BaseActivity {
     }
 
 
-    private void readMessage(int id, final int position) {
+    private void readMessage(final MessageList.MessageListModel data, final int position, final boolean isEnterDetails) {
         OkGo.<AMBaseDto<MessageList>>get(Constants.messageDetailsUrl)
                 .tag(mContext)
                 .params("token", TokenCache.getToken(mContext))
-                .params("message_id", id)
+                .params("message_id", data.getId())
                 .execute(new NewsCallback<AMBaseDto<MessageList>>() {
                     @Override
                     public void onStart(Request<AMBaseDto<MessageList>, ? extends Request> request) {
@@ -188,6 +216,7 @@ public class MessageListActivity extends BaseActivity {
 
                     @Override
                     public void onSuccess(final Response<AMBaseDto<MessageList>> response) {
+                        dismissLoading();
                         if (response.body().code == 0) {
                             showToast("更新消息状态成功");
                             if (mAdapter != null) {
@@ -196,6 +225,9 @@ public class MessageListActivity extends BaseActivity {
                                 boolean openStatus = !mAdapter.getData().get(position).isOpenMessageContent();
                                 mAdapter.getData().get(position).setOpenMessageContent(openStatus);
                                 mAdapter.notifyItemChanged(position);
+                                if (isEnterDetails) {
+                                    skipWorkingTicketDetails(data);
+                                }
                             }
                         } else {
                             showToast("更新消息状态失败");
@@ -205,14 +237,21 @@ public class MessageListActivity extends BaseActivity {
                     @Override
                     public void onError(Response<AMBaseDto<MessageList>> response) {
                         super.onError(response);
+                        dismissLoading();
                     }
 
                     @Override
                     public void onFinish() {
                         super.onFinish();
-                        dismissLoading();
                     }
                 });
+    }
+
+    private void skipWorkingTicketDetails(MessageList.MessageListModel data) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("ticketId", data.getTicketId());
+        bundle.putInt("processState", data.getProcessState());
+        RxActivityTool.skipActivity(mContext, WorkingTicketDetailsActivity.class, bundle);
     }
 
     private void rotateAnim(View view, float rotate) {

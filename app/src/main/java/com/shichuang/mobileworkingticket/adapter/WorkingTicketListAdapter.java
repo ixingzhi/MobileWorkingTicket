@@ -1,6 +1,7 @@
 package com.shichuang.mobileworkingticket.adapter;
 
 import android.graphics.Color;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -35,8 +36,12 @@ public class WorkingTicketListAdapter extends BaseQuickAdapter<WorkingTicketList
         helper.setText(R.id.tv_overall_dimensions, "落料尺寸：" + item.getOverallDimensions());
         helper.setText(R.id.tv_specifications, "规格：" + item.getSpecifications());
         helper.setText(R.id.tv_time, RxTimeTool.stringFormat(item.getAddTime()));
-        helper.setText(R.id.tv_current_progress_name, "当前工序：" + item.getProcessName());
-
+        if (TextUtils.isEmpty(item.getProcessName())) {
+            helper.setGone(R.id.tv_current_progress_name, false);
+        }else{
+            helper.setGone(R.id.tv_current_progress_name, true);
+            helper.setText(R.id.tv_current_progress_name, "当前工序：" + item.getProcessName());
+        }
         String workTicketState = "";
         switch (item.getProcessState()) {   // 工票工序状态 1=待激活，2=领料确认 ，3=分配组员，4=生产作业,5=质量检查，6=已完成
             case 1:
@@ -53,9 +58,9 @@ public class WorkingTicketListAdapter extends BaseQuickAdapter<WorkingTicketList
                 break;
             case 4:
                 workTicketState = "生产作业";
-                if(item.getProcessMemberStatus() == 2){  // 已开始，设置字体颜色（#0000C6），其他为红色
+                if (item.getProcessMemberStatus() == 2) {  // 已开始，设置字体颜色（#0000C6），其他为红色
                     helper.setTextColor(R.id.tv_part_status, Color.parseColor("#0000C6"));
-                }else{
+                } else {
                     helper.setTextColor(R.id.tv_part_status, mContext.getResources().getColor(R.color.red));
                 }
                 break;

@@ -6,12 +6,12 @@ package com.shichuang.mobileworkingticket.common;
 
 public interface Constants {
     //String MAIN_ENGINE = "http://192.168.2.124:8080/ydgp";
-    //String MAIN_ENGINE = "http://192.168.223.212:8081/ydgp";
+    //String MAIN_ENGINE = "http://192.168.31.64:8081/ydgp";
     //String MAIN_ENGINE = "http://61.160.111.74:8081/ydgp";
     String MAIN_ENGINE = "http://workticket.wxboiler.com:8081/ydgp";
 
     //String MAIN_ENGINE_PIC = "http://192.168.2.124:8080";
-    //String MAIN_ENGINE_PIC = "http://192.168.223.212:8081";
+    //String MAIN_ENGINE_PIC = "http://192.168.31.64:8081";
     //String MAIN_ENGINE_PIC = "http://61.160.111.74:8081";
     String MAIN_ENGINE_PIC = "http://workticket.wxboiler.com:8081";
 
